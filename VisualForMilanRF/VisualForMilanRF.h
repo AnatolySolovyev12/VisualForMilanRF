@@ -11,6 +11,18 @@ public:
     VisualForMilanRF(QWidget *parent = nullptr);
     ~VisualForMilanRF();
 
+    void addItemInList();
+    void deleteItemInList();
+
+
+
+
+private slots:
+    void setData();
+    void setNumber();
+    void closeEditor(QTreeWidgetItem* any);
+
+
 private:
     Ui::VisualForMilanRFClass ui;
 };

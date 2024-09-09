@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>784</width>
-    <height>845</height>
+    <width>658</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QTreeWidget" name="treeWidget">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>170</y>
+      <x>40</x>
+      <y>10</y>
       <width>551</width>
       <height>258</height>
      </rect>
@@ -45,69 +45,61 @@
     </column>
     <item>
      <property name="text">
-      <string>Nizhnevartovsk</string>
+      <string>General</string>
      </property>
-     <item>
-      <property name="text">
-       <string>Lenina</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <item>
-       <property name="text">
-        <string>34</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>1</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>2</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>3</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>4</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-      </item>
-     </item>
     </item>
+   </widget>
+   <widget class="QPushButton" name="pushButtonAdd">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>+</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonAddMinus">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonNamed">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>N</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonNumber">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>100</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>№</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -115,7 +107,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>784</width>
+     <width>658</width>
      <height>21</height>
     </rect>
    </property>
