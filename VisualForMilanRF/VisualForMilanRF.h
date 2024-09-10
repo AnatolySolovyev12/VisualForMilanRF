@@ -16,13 +16,14 @@ public:
 
 
 
+    void test();
+
+
 
 private slots:
     void setData();
     void closeEditor(QTreeWidgetItem* any);
     void otherItemWasChecked(QTreeWidgetItem* any);
-
-   // void setNumber();
 
 
 private:

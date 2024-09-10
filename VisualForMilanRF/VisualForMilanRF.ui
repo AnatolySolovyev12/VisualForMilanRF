@@ -90,7 +90,7 @@
      <string>-</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButtonNamed">
+   <widget class="QPushButton" name="pushButtonTest">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -100,20 +100,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>N</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonNumber">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>20</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>№</string>
+     <string>T</string>
     </property>
    </widget>
   </widget>
