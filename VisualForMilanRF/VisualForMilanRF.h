@@ -25,4 +25,6 @@ private slots:
 
 private:
     Ui::VisualForMilanRFClass ui;
+
+    QTreeWidgetItem* middleItem = nullptr;
 };
