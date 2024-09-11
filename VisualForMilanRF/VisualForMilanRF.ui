@@ -62,6 +62,15 @@
      <property name="text">
       <string>General</string>
      </property>
+     <property name="background">
+      <brush brushstyle="NoBrush">
+       <color alpha="255">
+        <red>213</red>
+        <green>213</green>
+        <blue>213</blue>
+       </color>
+      </brush>
+     </property>
     </item>
    </widget>
    <widget class="QPushButton" name="pushButtonAdd">

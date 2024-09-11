@@ -37,6 +37,10 @@ void VisualForMilanRF::addItemInList()
     int column = ui.treeWidget->currentColumn();
 
     any->setText(0, "new");
+    
+    any->setBackground(0, QColor(168,222,238,255));
+    any->setBackground(1, QColor(217,225,187,234));
+
 }
 
 void VisualForMilanRF::deleteItemInList()
