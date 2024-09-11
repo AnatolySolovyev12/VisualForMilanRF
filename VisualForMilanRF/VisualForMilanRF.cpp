@@ -22,6 +22,9 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
 
 
     connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::test);
+
+
+
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -112,7 +115,14 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any)
 
 void VisualForMilanRF::test() // поиск во втором столбце совпадающих значений с последующей записью в массив. Потом выводим значения ячеек первого столбца напротив которых есть совпадение.
 {
-    QList<QTreeWidgetItem*> myList = ui.treeWidget->findItems("12", Qt::MatchRecursive, 1);
+    QInputDialog inputDialog;
+
+    int number = inputDialog.getInt(this, "Add number", "Serial number", QLineEdit::Normal);
+    QString strNumber;
+
+    strNumber = strNumber.setNum(number);
+
+    QList<QTreeWidgetItem*> myList = ui.treeWidget->findItems(strNumber, Qt::MatchRecursive, 1);
 
     qDebug() << myList.size();
 
@@ -127,6 +137,8 @@ void VisualForMilanRF::test() // поиск во втором столбце совпадающих значений с 
         temporary = general->child(index);
 
         qDebug() << temporary->text(0);
+
+       // qDebug() << temporary->parent()->text(0);
 
     }
 }
