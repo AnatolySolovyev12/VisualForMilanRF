@@ -9,42 +9,38 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
 
     connect(ui.pushButtonAdd, &QPushButton::clicked, this, &VisualForMilanRF::addItemInList);
     connect(ui.pushButtonAddMinus, &QPushButton::clicked, this, &VisualForMilanRF::deleteItemInList);
-   // connect(ui.pushButtonNamed, &QPushButton::clicked, this, &VisualForMilanRF::setData);
-   // connect(ui.pushButtonNumber, &QPushButton::clicked, this, &VisualForMilanRF::setNumber);
 
-    connect(ui.treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(setNumber()));
-
+    connect(ui.treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(setData()));
     connect(ui.treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(closeEditor(QTreeWidgetItem*)));
+    connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(otherItemWasChecked(QTreeWidgetItem*)));
 
-   // connect(ui.treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(closeEditor(QTreeWidgetItem*)));
+    middleColumn = 0;
 
 
-   // connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int column)), this, SLOT(closeEditor(QTreeWidgetItem*)));
 
-    
+
+
+
+    connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::test);
 }
 
 VisualForMilanRF::~VisualForMilanRF()
 {}
 
-
 void VisualForMilanRF::addItemInList()
 {
-
-  
-    
     //ui.treeWidget->expandItem(ui.treeWidget->currentItem()); // раскрытие элемента
 
     QTreeWidgetItem* any = nullptr;
+
     if(ui.treeWidget->currentItem() == nullptr)
         any = new QTreeWidgetItem(ui.treeWidget);
     else
         any = new QTreeWidgetItem(ui.treeWidget->currentItem());
   
     int column = ui.treeWidget->currentColumn();
-    QString str;
+
     any->setText(0, "new");
-   
 }
 
 void VisualForMilanRF::deleteItemInList()
@@ -60,35 +56,25 @@ void VisualForMilanRF::deleteItemInList()
    // ui.treeWidget->collapseItem(ui.treeWidget->currentItem()); // закрытие элемента
 
     //  ui.treeWidget->clear(); // полна€ очистка виджета
-
-    
 }
 
-void VisualForMilanRF::setData()
+void VisualForMilanRF::setData() // в случае двойного клика в €чейку открываем редактор
 {
-    QTreeWidgetItem* any = ui.treeWidget->currentItem();
+    QTreeWidgetItem* any = ui.treeWidget->currentItem(); // присваиваем указателю выбранную €чейку
+    int column = ui.treeWidget->currentColumn(); // присваиваем переменной номер текущего столбца (отсчЄт начинаетс€ с 0-ого)
 
-    QInputDialog inputDialog;
-
-    QString c_text = inputDialog.getText(this, "Add name", "Name of object", QLineEdit::Normal);
-    QString c_textSimp = c_text.simplified(); // удал€ем проблеы в начале и в конце и замен€ем внутренние двойные пробелы на одинарные.
-
-    any->setText(0, c_textSimp);
-
-}
-
-void VisualForMilanRF::setNumber()
-{
+    if (column > 1) return; // не даЄм редактировать дальше второго столбца
 
     qDebug() << "OPEN EDITOR";
     
-    QTreeWidgetItem* any = ui.treeWidget->currentItem();
-    middleItem = ui.treeWidget->currentItem();
-    ui.treeWidget->openPersistentEditor(any, 0);
-    ui.treeWidget->editItem(any, 0);
 
 
-   
+    middleColumn = column;
+    middleItem = any;
+
+    ui.treeWidget->openPersistentEditor(any, column); // разрешаем редактирование €чейки
+    ui.treeWidget->editItem(any, column); // открываем редактор
+
 
 
     /*
@@ -102,13 +88,45 @@ void VisualForMilanRF::setNumber()
     */
 }
 
-
-void VisualForMilanRF::closeEditor(QTreeWidgetItem* any)
+void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрыти€ редактора у последней €чейки
 {
+    ui.treeWidget->closePersistentEditor(middleItem, middleColumn); // закрываем редактор
+
     qDebug() << "CLOSE EDITOR";
-    ui.treeWidget->closePersistentEditor(any, 0);
-
-  //  ui.treeWidget->closePersistentEditor(middleItem, 0);
-
 }
 
+void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any)
+{
+    int column = ui.treeWidget->currentColumn();
+    qDebug() << "Checked " << any->text(column);
+
+    if (any == middleItem && column == middleColumn)
+        return;
+
+    ui.treeWidget->closePersistentEditor(middleItem, middleColumn);
+    middleItem = nullptr;
+
+    qDebug() << "CLOSE EDITOR";
+}
+
+
+void VisualForMilanRF::test() // поиск во втором столбце совпадающих значений с последующей записью в массив. ѕотом выводим значени€ €чеек первого столбца напротив которых есть совпадение.
+{
+    QList<QTreeWidgetItem*> myList = ui.treeWidget->findItems("12", Qt::MatchRecursive, 1);
+
+    qDebug() << myList.size();
+
+    for (auto& val : myList)
+    {
+        QTreeWidgetItem* temporary = val->parent();
+
+        int index = temporary->indexOfChild(val);
+
+        QTreeWidgetItem* general = ui.treeWidget->topLevelItem(0);
+
+        temporary = general->child(index);
+
+        qDebug() << temporary->text(0);
+
+    }
+}

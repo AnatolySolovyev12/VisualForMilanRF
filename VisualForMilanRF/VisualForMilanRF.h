@@ -16,15 +16,19 @@ public:
 
 
 
+    void test();
+
+
 
 private slots:
     void setData();
-    void setNumber();
     void closeEditor(QTreeWidgetItem* any);
+    void otherItemWasChecked(QTreeWidgetItem* any);
 
 
 private:
     Ui::VisualForMilanRFClass ui;
 
     QTreeWidgetItem* middleItem = nullptr;
+    int middleColumn;
 };
