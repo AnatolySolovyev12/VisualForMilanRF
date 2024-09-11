@@ -11,14 +11,15 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.pushButtonAddMinus, &QPushButton::clicked, this, &VisualForMilanRF::deleteItemInList);
    // connect(ui.pushButtonNamed, &QPushButton::clicked, this, &VisualForMilanRF::setData);
    // connect(ui.pushButtonNumber, &QPushButton::clicked, this, &VisualForMilanRF::setNumber);
+
     connect(ui.treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(setNumber()));
+
     connect(ui.treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(closeEditor(QTreeWidgetItem*)));
 
-    connect(ui.treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(closeEditor(QTreeWidgetItem*)));
+   // connect(ui.treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(closeEditor(QTreeWidgetItem*)));
 
 
-    
-    connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int column)), this, SLOT(closeEditor(QTreeWidgetItem*)));
+   // connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int column)), this, SLOT(closeEditor(QTreeWidgetItem*)));
 
     
 }
@@ -82,7 +83,7 @@ void VisualForMilanRF::setNumber()
     qDebug() << "OPEN EDITOR";
     
     QTreeWidgetItem* any = ui.treeWidget->currentItem();
-    middleItem = any;
+    middleItem = ui.treeWidget->currentItem();
     ui.treeWidget->openPersistentEditor(any, 0);
     ui.treeWidget->editItem(any, 0);
 
@@ -106,6 +107,8 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any)
 {
     qDebug() << "CLOSE EDITOR";
     ui.treeWidget->closePersistentEditor(any, 0);
+
+  //  ui.treeWidget->closePersistentEditor(middleItem, 0);
 
 }
 
