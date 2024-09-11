@@ -13,11 +13,7 @@ public:
 
     void addItemInList();
     void deleteItemInList();
-
-
-
-    void test();
-
+    void adressFinder();
 
 
 private slots:

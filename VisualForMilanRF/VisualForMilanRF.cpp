@@ -13,17 +13,10 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(setData()));
     connect(ui.treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(closeEditor(QTreeWidgetItem*)));
     connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(otherItemWasChecked(QTreeWidgetItem*)));
-
+   
+    connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::adressFinder);
+   
     middleColumn = 0;
-
-
-
-
-
-
-    connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::test);
-
-
 
 }
 
@@ -70,25 +63,11 @@ void VisualForMilanRF::setData() // в случае двойного клика в €чейку открываем р
 
     qDebug() << "OPEN EDITOR";
     
-
-
     middleColumn = column;
     middleItem = any;
 
     ui.treeWidget->openPersistentEditor(any, column); // разрешаем редактирование €чейки
     ui.treeWidget->editItem(any, column); // открываем редактор
-
-
-
-    /*
-    QInputDialog inputDialog;
-
-    int number = inputDialog.getInt(this, "Add number", "Serial number", QLineEdit::Normal);
-    QString strNumber;
-
-    any->setText(0, any->text(0));
-    any->setText(1, strNumber.setNum(number));
-    */
 }
 
 void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрыти€ редактора у последней €чейки
@@ -98,7 +77,7 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрыти€ редакт
     qDebug() << "CLOSE EDITOR";
 }
 
-void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any)
+void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем открытый редактор в случае переключени€ на другой элемент
 {
     int column = ui.treeWidget->currentColumn();
     qDebug() << "Checked " << any->text(column);
@@ -113,32 +92,43 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any)
 }
 
 
-void VisualForMilanRF::test() // поиск во втором столбце совпадающих значений с последующей записью в массив. ѕотом выводим значени€ €чеек первого столбца напротив которых есть совпадение.
+void VisualForMilanRF::adressFinder() // поиск во втором столбце совпадающих значений с последующей записью в массив. ѕотом выводим полный адрес в первом столбце до найденного сопадени€.
 {
     QInputDialog inputDialog;
 
     int number = inputDialog.getInt(this, "Add number", "Serial number", QLineEdit::Normal);
+   
     QString strNumber;
 
     strNumber = strNumber.setNum(number);
 
-    QList<QTreeWidgetItem*> myList = ui.treeWidget->findItems(strNumber, Qt::MatchRecursive, 1);
-
-    qDebug() << myList.size();
-
+    QList <QTreeWidgetItem*> myList = ui.treeWidget->findItems(strNumber, Qt::MatchRecursive, 1);
+    
     for (auto& val : myList)
     {
+        if (val->parent() == nullptr)
+        {
+            qDebug() << ui.treeWidget->topLevelItem(0)->text(0);
+            break;
+        }
+
         QTreeWidgetItem* temporary = val->parent();
 
         int index = temporary->indexOfChild(val);
 
-        QTreeWidgetItem* general = ui.treeWidget->topLevelItem(0);
+        strNumber = " / " + temporary->child(index)->text(0);
 
-        temporary = general->child(index);
+        do {
 
-        qDebug() << temporary->text(0);
+            strNumber.push_front(" / " + temporary->text(0));
+            temporary = temporary->parent();
 
-       // qDebug() << temporary->parent()->text(0);
+        } while (temporary != nullptr);
 
+        strNumber.remove(0, 3);
+
+        qDebug() << strNumber;
+
+        strNumber = "";
     }
 }
