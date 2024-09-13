@@ -13,11 +13,17 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(setData()));
     connect(ui.treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(closeEditor(QTreeWidgetItem*)));
     connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(otherItemWasChecked(QTreeWidgetItem*)));
-   
-    connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::adressFinder);
+    connect(ui.pushButtonFinder, &QPushButton::clicked, this, &VisualForMilanRF::adressFinder);
    
     middleColumn = 0;
 
+
+
+    connect(ui.pushButtonCheckChannel, &QPushButton::clicked, this, &VisualForMilanRF::checkChannel);
+
+    connect(ui.pushButtonTest_2, &QPushButton::clicked, this, &VisualForMilanRF::test);
+
+    
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -25,8 +31,6 @@ VisualForMilanRF::~VisualForMilanRF()
 
 void VisualForMilanRF::addItemInList()
 {
-    //ui.treeWidget->expandItem(ui.treeWidget->currentItem()); // раскрытие элемента
-
     QTreeWidgetItem* any = nullptr;
 
     if(ui.treeWidget->currentItem() == nullptr)
@@ -36,11 +40,15 @@ void VisualForMilanRF::addItemInList()
   
     int column = ui.treeWidget->currentColumn();
 
+    offChanger = true;
+
     any->setText(0, "new");
     
     any->setBackground(0, QColor(221, 221, 221, 255));
     any->setBackground(1, QColor(245, 216, 183, 255));
     any->setBackground(2, QColor(217, 225, 187, 255));
+
+    offChanger = false;
 }
 
 void VisualForMilanRF::deleteItemInList()
@@ -52,10 +60,6 @@ void VisualForMilanRF::deleteItemInList()
         return;
 
     parentTaked->takeChild(parentTaked->indexOfChild(taked));
-    
-   // ui.treeWidget->collapseItem(ui.treeWidget->currentItem()); // закрытие элемента
-
-    //  ui.treeWidget->clear(); // полна€ очистка виджета
 }
 
 void VisualForMilanRF::setData() // в случае двойного клика в €чейку открываем редактор
@@ -76,22 +80,46 @@ void VisualForMilanRF::setData() // в случае двойного клика в €чейку открываем р
 
 void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрыти€ редактора в случае внесени€ изменений (после нажати€ Enter)
 {
+    if (offChanger) return; // преп€тствуем многократному исполнению этой функции при изменении цветов
+
     QString temporary = any->text(2).trimmed(); // убираем пробелы
     any->setText(2, temporary);
 
     if (any->text(2) != "") // красим если что-то написано в серийнике
     {
+        offChanger = true;
+
         any->setBackground(4, QColor(213, 176, 176, 255));
+        any->setCheckState(4, any->checkState(4));
+
         any->setBackground(5, QColor(213, 176, 176, 255));
+        any->setCheckState(5, any->checkState(5));
+
         any->setBackground(6, QColor(156, 203, 213, 255));
+        any->setCheckState(6, any->checkState(6));
+
         any->setBackground(7, QColor(156, 203, 213, 255));
+        any->setCheckState(7, any->checkState(7));
+
+        offChanger = false;
     }
     else
     {
+        offChanger = true;
+
         any->setBackground(4, QColor("white"));
+        any->setData(4, Qt::CheckStateRole, QVariant());
+
         any->setBackground(5, QColor("white"));
+        any->setData(5, Qt::CheckStateRole, QVariant());
+
         any->setBackground(6, QColor("white"));
+        any->setData(6, Qt::CheckStateRole, QVariant());
+
         any->setBackground(7, QColor("white"));
+        any->setData(7, Qt::CheckStateRole, QVariant());
+
+        offChanger = false;
     }
     ui.treeWidget->closePersistentEditor(middleItem, middleColumn); // закрываем редактор
 
@@ -100,6 +128,8 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрыти€ редакт
 
 void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем открытый редактор в случае переключени€ на другой элемент
 {
+    if (offChanger) return;
+
     int column = ui.treeWidget->currentColumn();
     qDebug() << "Checked " << any->text(column);
 
@@ -111,10 +141,12 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем от
 
     if (any->text(2) != "")
     {
+        offChanger = true;
         any->setBackground(4, QColor(213, 176, 176, 255));
         any->setBackground(5, QColor(213, 176, 176, 255));
         any->setBackground(6, QColor(156, 203, 213, 255));
         any->setBackground(7, QColor(156, 203, 213, 255));
+        offChanger = false;
     }
 
     ui.treeWidget->closePersistentEditor(middleItem, middleColumn);
@@ -134,7 +166,7 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих зна
 
     strNumber = strNumber.setNum(number);
 
-    QList <QTreeWidgetItem*> myList = ui.treeWidget->findItems(strNumber, Qt::MatchRecursive, 2);
+    QList <QTreeWidgetItem*> myList = ui.treeWidget->findItems(strNumber, Qt::MatchRecursive, ui.treeWidget->currentColumn());
     
     for (auto& val : myList)
     {
@@ -163,4 +195,22 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих зна
 
         strNumber = "";
     }
+}
+
+
+
+
+void VisualForMilanRF::checkChannel()
+{
+
+    //ui.treeWidget->expandItem(ui.treeWidget->currentItem()); // раскрытие элемента
+
+    // ui.treeWidget->collapseItem(ui.treeWidget->currentItem()); // закрытие элемента
+
+    //  ui.treeWidget->clear(); // полна€ очистка виджета
+}
+
+void VisualForMilanRF::test()
+{
+
 }

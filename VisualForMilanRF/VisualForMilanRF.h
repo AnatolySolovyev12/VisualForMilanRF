@@ -14,7 +14,9 @@ public:
     void addItemInList();
     void deleteItemInList();
     void adressFinder();
+    void checkChannel();
 
+    void test();
 
 private slots:
     void setData();
@@ -27,4 +29,5 @@ private:
 
     QTreeWidgetItem* middleItem = nullptr;
     int middleColumn;
+    bool offChanger = false;
 };

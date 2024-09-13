@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
-    <height>349</height>
+    <width>1073</width>
+    <height>479</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>40</x>
       <y>10</y>
-      <width>811</width>
-      <height>258</height>
+      <width>991</width>
+      <height>391</height>
      </rect>
     </property>
     <column>
@@ -125,7 +125,7 @@
      <string>-</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButtonTest">
+   <widget class="QPushButton" name="pushButtonFinder">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -138,13 +138,39 @@
      <string>F</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButtonCheckChannel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>100</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>✓</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonTest_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>T</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>887</width>
+     <width>1073</width>
      <height>21</height>
     </rect>
    </property>
