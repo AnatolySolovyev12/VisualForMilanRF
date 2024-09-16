@@ -1,10 +1,5 @@
 #include "VisualForMilanRF.h"
 
-#include <QInputDialog>
-#include <QFileDialog>
-
-#include <QFile>
-
 VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -26,7 +21,6 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
 
     connect(ui.pushButtonTest_2, &QPushButton::clicked, this, &VisualForMilanRF::test2);
 
-    QFile file("LOG.txt");
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -158,7 +152,6 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем от
     qDebug() << "CLOSE EDITOR";
 }
 
-
 void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих значений с последующей записью в массив. Потом выводим полный адрес в первом столбце до найденного сопадения.
 {
     QInputDialog inputDialog;
@@ -205,7 +198,7 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих зна
 
 void VisualForMilanRF::test1()
 {
-
+    
     QTreeWidgetItem* any = nullptr;
 
     if (ui.treeWidget->currentItem() == nullptr)
@@ -233,19 +226,124 @@ void VisualForMilanRF::test1()
 
 void VisualForMilanRF::test2()
 {
- //  QString fileName = "111212121212121";
-  // fileName = QInputDialog::getText(this, "File name", "What name for file config");
-  // QString savedFile = QFileDialog::getSaveFileName(0, "Save XML", fileName, "*.xml");
+    /*
+    QString savedFile = QFileDialog::getSaveFileName(0, "Save XML", "", "*.xml");
+    QFile file(savedFile);
+    file.open(QIODevice::WriteOnly);
+   
+   // QTextStream out(&file); // поток записываемых данных направляем в файл
+   // out << "12345" << Qt::endl;
+
+    QXmlStreamWriter xmlWriter(&file); // инициализируем объект QXmlStreamWriter ссылкой на объект с которым будем работать
+
+    xmlWriter.setDevice(&file);
+    xmlWriter.setAutoFormatting(true); // необходимо для автоматического перехода на новую строку
+    xmlWriter.setAutoFormattingIndent(2); // задаём количество пробелов в отступе (по умолчанию 4)
+    xmlWriter.writeStartDocument(); // пишет в шапке кодировку документа
+
+    xmlWriter.writeStartElement("General"); // отркывает начальный элемент "лестницы" xml
+
+   // QTreeWidgetItem* any = ui.treeWidget->currentItem(); // присваиваем указателю выбранную ячейку
+   // int column = ui.treeWidget->currentColumn(); // присваиваем переменной номер текущего столбца (отсчёт начинается с 0-ого)
+
+    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
+
+    QString temporaryStr = ui.treeWidget->topLevelItem(0)->text(1);
+
+    xmlWriter.writeAttribute("ID", temporaryStr); // присваиваем атрибуты внутри открытого первого элемента
+
+    temporaryStr = ui.treeWidget->topLevelItem(0)->text(2);
+
+    xmlWriter.writeAttribute("Number", temporaryStr);
+    */
+
+    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
+
+   // qDebug() << any->text(0);
+
+    recursionXmlWriter(any);
+
+    /*
+    if (any->childCount())
+    {
+        int count = any->childCount();
+
+        for (int x = 0; x < count; x++)
+        {
+
+            qDebug() << any->child(x)->text(0);
+
+        }
+
+    }
+    else
+    {
+        qDebug() << any->text(0);
+        return;
+    }
+
+    */
+
+   // qDebug() << any->childCount();
+
+   // qDebug() << any->child(0)->text(0);
+
+   // xmlWriter.writeStartElement(ui.treeWidget->topLevelItem(2)->text(0));
+   // xmlWriter.writeEndElement();
 
 
- //  QString savedFile = "abc";
+    /*
+    if (any->childCount())
+    {
+        int counter = any->childCount();
 
-   //if (!ui.autoSender->isChecked())
-    //   savedFile = QFileDialog::getSaveFileName(0, "Save XML", fileName, "*.txt"); // В последнем параметре также можно прописать tr("Xml files (*.xml)"). Это будет как приписка с указанием формата. Удобно.
+        qDebug() << counter;
+
+        for (int countOfElement = 1; countOfElement < counter; countOfElement++)
+        {
+            ui.treeWidget->topLevelItem(countOfElement);
+
+            xmlWriter.writeStartElement(ui.treeWidget->topLevelItem(countOfElement)->text(0));
+
+            xmlWriter.writeAttribute("ID", ui.treeWidget->topLevelItem(countOfElement)->text(1));
+
+            xmlWriter.writeAttribute("Number", ui.treeWidget->topLevelItem(countOfElement)->text(2));
+
+            xmlWriter.writeEndElement();
+        }
 
 
-   //    QFile file(savedFile);
+    }
+    */
 
-    QFile file("LOG.txt");
 
+
+
+    //xmlWriter.writeEndElement(); // General
+
+   // xmlWriter.writeEndDocument();
+
+
+   // file.close();
+
+}
+
+void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some)
+{
+    if (some->childCount())
+    {
+        qDebug() << some->text(0);
+
+        int count = some->childCount();
+
+        for (int x = 0; x < count; x++)
+        {
+            recursionXmlWriter(some->child(x));
+        }
+    }
+    else
+    {
+        qDebug() << some->text(0);
+        return;
+    }
 }
