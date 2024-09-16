@@ -1,6 +1,9 @@
 #include "VisualForMilanRF.h"
 
 #include <QInputDialog>
+#include <QFileDialog>
+
+#include <QFile>
 
 VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     : QMainWindow(parent)
@@ -19,11 +22,11 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
 
 
 
-    connect(ui.pushButtonCheckChannel, &QPushButton::clicked, this, &VisualForMilanRF::checkChannel);
+    connect(ui.pushButtonCheckChannel, &QPushButton::clicked, this, &VisualForMilanRF::test1);
 
-    connect(ui.pushButtonTest_2, &QPushButton::clicked, this, &VisualForMilanRF::test);
+    connect(ui.pushButtonTest_2, &QPushButton::clicked, this, &VisualForMilanRF::test2);
 
-    
+    QFile file("LOG.txt");
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -200,17 +203,49 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих зна
 
 
 
-void VisualForMilanRF::checkChannel()
+void VisualForMilanRF::test1()
 {
 
-    //ui.treeWidget->expandItem(ui.treeWidget->currentItem()); // раскрытие элемента
+    QTreeWidgetItem* any = nullptr;
 
-    // ui.treeWidget->collapseItem(ui.treeWidget->currentItem()); // закрытие элемента
+    if (ui.treeWidget->currentItem() == nullptr)
+        any = new QTreeWidgetItem(ui.treeWidget);
+    else
+        any = new QTreeWidgetItem(ui.treeWidget->currentItem());
 
-    //  ui.treeWidget->clear(); // полная очистка виджета
+    int column = ui.treeWidget->currentColumn();
+
+    offChanger = true;
+
+    any->setText(0, "new");
+
+    any->setText(2, "11111");
+
+    any->setBackground(0, QColor(221, 221, 221, 255));
+    any->setBackground(1, QColor(245, 216, 183, 255));
+    any->setBackground(2, QColor(217, 225, 187, 255));
+
+    offChanger = false;
+
+    VisualForMilanRF::closeEditor(any);
+    
 }
 
-void VisualForMilanRF::test()
+void VisualForMilanRF::test2()
 {
+ //  QString fileName = "111212121212121";
+  // fileName = QInputDialog::getText(this, "File name", "What name for file config");
+  // QString savedFile = QFileDialog::getSaveFileName(0, "Save XML", fileName, "*.xml");
+
+
+ //  QString savedFile = "abc";
+
+   //if (!ui.autoSender->isChecked())
+    //   savedFile = QFileDialog::getSaveFileName(0, "Save XML", fileName, "*.txt"); // В последнем параметре также можно прописать tr("Xml files (*.xml)"). Это будет как приписка с указанием формата. Удобно.
+
+
+   //    QFile file(savedFile);
+
+    QFile file("LOG.txt");
 
 }

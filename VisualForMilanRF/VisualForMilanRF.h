@@ -14,9 +14,9 @@ public:
     void addItemInList();
     void deleteItemInList();
     void adressFinder();
-    void checkChannel();
+    void test1();
 
-    void test();
+    void test2();
 
 private slots:
     void setData();
