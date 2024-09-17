@@ -142,7 +142,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>100</y>
+      <y>160</y>
       <width>20</width>
       <height>20</height>
      </rect>
@@ -155,13 +155,13 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
+      <y>100</y>
       <width>20</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>T</string>
+     <string>Ex</string>
     </property>
    </widget>
   </widget>

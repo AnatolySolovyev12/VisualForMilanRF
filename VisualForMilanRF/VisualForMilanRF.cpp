@@ -281,85 +281,45 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 void VisualForMilanRF::test1()
 {
 
-    /* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
-    QFile file("TEST");
-    if (!file.open(QFile::ReadOnly | QFile::Text))
-    {
-        /*
-        QMessageBox::warning(this,
-            "Ошибка файла",
-            "Не удалось открыть файл",
-            QMessageBox::Ok);
-            */
-    }
-    else {
-        /* Создаем объект, с помощью которого осуществляется чтение из файла */
-        QXmlStreamReader xmlReader;
-        xmlReader.setDevice(&file);
-        xmlReader.readNext();   // Переходит к первому элементу в файле
+	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
+	QFile file("123.xml");
+	if (!file.open(QFile::ReadOnly | QFile::Text))
+	{
+		qDebug() << "Not open file";
+	}
+	else
+	{
+		/* Создаем объект, с помощью которого осуществляется чтение из файла */
 
-        /* Крутимся в цикле до тех пор, пока не достигнем конца документа
-         * */
-        while (!xmlReader.atEnd())
-        {
-            /* Проверяем, является ли элемент началом тега
-             * */
-            if (xmlReader.isStartElement())
-            {
-                /* Проверяем, относится ли тег к одному из чекбоксов.
-                 * Если "ДА", то выполняем проверку атрибута чекбокса
-                 * и записи для lineEdit
-                 * */
-                if (xmlReader.name() == "checkBox_1")
-                {
-                    /* Забираем все атрибуты тега и перебираем их для проверки на соответствие
-                     * нужному нам атрибуту
-                     * */
-                    foreach(const QXmlStreamAttribute & attr, xmlReader.attributes()) {
-                        /* Если найден нужный атрибут, то по его значению устанавливаем
-                         * состояние чекбокса
-                         * */
-                        if (attr.name().toString() == "boolean") {
-                            QString attribute_value = attr.value().toString();
-                            ui->checkBox->setChecked((QString::compare(attribute_value, "true") == 0) ? true : false);
+		qDebug() << "File was OPEN";
+		QXmlStreamReader xmlReader;
+		xmlReader.setDevice(&file);
+		xmlReader.readNext();   // Переходит к первому элементу в файле
 
-                        }
-                    }
-                    /* забираем текст из тела тега и вставляем его соответствующий lineEdit
-                     * */
-                    ui->lineEditCB1->setText(xmlReader.readElementText());
+		/* Крутимся в цикле до тех пор, пока не достигнем конца документа
+		 * */
+		while (!xmlReader.atEnd())
+		{
+			xmlReader.readNextStartElement();
 
-                    /* аналогично работаем с остальными тегами */
-                }
-                else if (xmlReader.name() == "checkBox_2") {
-                    foreach(const QXmlStreamAttribute & attr, xmlReader.attributes()) {
-                        if (attr.name().toString() == "boolean") {
-                            QString attribute_value = attr.value().toString();
-                            ui->checkBox_2->setChecked((QString::compare(attribute_value, "true") == 0) ? true : false);
+			qDebug() << xmlReader.name();
 
-                        }
-                    }
-                    ui->lineEditCB2->setText(xmlReader.readElementText());
-                }
-                else if (xmlReader.name() == "checkBox_3") {
-                    foreach(const QXmlStreamAttribute & attr, xmlReader.attributes()) {
-                        if (attr.name().toString() == "boolean") {
-                            QString attribute_value = attr.value().toString();
-                            ui->checkBox_3->setChecked((QString::compare(attribute_value, "true") == 0) ? true : false);
+			for (QXmlStreamAttribute& val : xmlReader.attributes())
+			{
+				qDebug() << val.name() << " " << val.value();
 
-                        }
-                    }
-                    ui->lineEditCB3->setText(xmlReader.readElementText());
-                }
-            }
-            xmlReader.readNext(); // Переходим к следующему элементу файла
-        }
-        file.close(); // Закрываем файл
+			}
 
-        /* В данном коде не осуществляется проверка на закрытие тега
-         * поскольку в этом нет необходимости, но функционал QXmlStreamReader это позволяет
-         * */
-    }
+
+			qDebug() << "\n";
+
+			xmlReader.readNext();
+
+		}
+		file.close(); // Закрываем файл
+
+
+	}
 
 }
 

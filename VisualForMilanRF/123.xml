@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<General ID="aaa" Number="bbb">
+  <a ID="" Number="1" chekChannel="1" chekChannel="0" chekChannel="0" chekChannel="0"/>
+  <b ID="" Number="3" chekChannel="0" chekChannel="0" chekChannel="0" chekChannel="1">
+    <c ID="" Number="2" chekChannel="0" chekChannel="0" chekChannel="1" chekChannel="0"/>
+    <d ID="" Number=""/>
+  </b>
+</General>
+<General2 ID="aaa2" Number="bbb2">
+</General>
