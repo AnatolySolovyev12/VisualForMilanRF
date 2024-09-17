@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<General ID="aaa" Number="bbb">
-  <a ID="" Number="1" chekChannel="1" chekChannel="0" chekChannel="0" chekChannel="0"/>
-  <b ID="" Number="3" chekChannel="0" chekChannel="0" chekChannel="0" chekChannel="1">
-    <c ID="" Number="2" chekChannel="0" chekChannel="0" chekChannel="1" chekChannel="0"/>
-    <d ID="" Number=""/>
-  </b>
-</General>
-<General2 ID="aaa2" Number="bbb2">
+<General ID="" Number="">
+  <a ID="1" Number=""/>
+  <b ID="2" Number="123" checkChannel1="1" checkChannel2="0" checkChannel3="0" checkChannel4="1"/>
+  <c ID="3" Number=""/>
+  <d ID="4" Number="">
+    <jjj ID="999" Number="876" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0"/>
+  </d>
+  <e ID="5" Number="456" checkChannel1="1" checkChannel2="1" checkChannel3="1" checkChannel4="1"/>
+  <f ID="6" Number=""/>
 </General>

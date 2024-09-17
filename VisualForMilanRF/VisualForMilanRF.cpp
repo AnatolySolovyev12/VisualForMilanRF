@@ -231,10 +231,15 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
         {
             for (int count = 4; count <= 7; count++)
             {
+                QString temporary = "checkChannel";
+                QString middleStr;
+                middleStr.setNum(count -3);
+                temporary += middleStr;
+
                 if (some->checkState(count) == Qt::Unchecked)
-                    someXmlWriter.writeAttribute("chekChannel", "0");
+                    someXmlWriter.writeAttribute(temporary, "0");
                 else
-                    someXmlWriter.writeAttribute("chekChannel", "1");
+                    someXmlWriter.writeAttribute(temporary, "1");
             }
         }
 
@@ -259,10 +264,15 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
         {
             for (int count = 4; count <= 7; count++)
             {
+                QString temporary = "checkChannel";
+                QString middleStr;
+                middleStr.setNum(count - 3);
+                temporary += middleStr;
+
                 if (some->checkState(count) == Qt::Unchecked)
-                    someXmlWriter.writeAttribute("chekChannel", "0");
+                    someXmlWriter.writeAttribute(temporary, "0");
                 else
-                    someXmlWriter.writeAttribute("chekChannel", "1");
+                    someXmlWriter.writeAttribute(temporary, "1");
             }
         }
 
@@ -283,43 +293,37 @@ void VisualForMilanRF::test1()
 
 	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
 	QFile file("123.xml");
-	if (!file.open(QFile::ReadOnly | QFile::Text))
-	{
-		qDebug() << "Not open file";
-	}
-	else
-	{
-		/* Создаем объект, с помощью которого осуществляется чтение из файла */
+    QXmlStreamReader xmlReader(&file);
 
-		qDebug() << "File was OPEN";
-		QXmlStreamReader xmlReader;
-		xmlReader.setDevice(&file);
-		xmlReader.readNext();   // Переходит к первому элементу в файле
+    file.open(QFile::ReadWrite);
 
-		/* Крутимся в цикле до тех пор, пока не достигнем конца документа
-		 * */
-		while (!xmlReader.atEnd())
+
+
+	while (!xmlReader.atEnd())
+	{
+
+		xmlReader.readNextStartElement(); 
+
+        if (xmlReader.isEndElement()) // чтобы не выводить повторно имя элемента
+            continue;
+
+		qDebug() << xmlReader.name();
+
+
+		for (QXmlStreamAttribute& val : xmlReader.attributes())
 		{
-			xmlReader.readNextStartElement();
-
-			qDebug() << xmlReader.name();
-
-			for (QXmlStreamAttribute& val : xmlReader.attributes())
-			{
-				qDebug() << val.name() << " " << val.value();
-
-			}
-
-
-			qDebug() << "\n";
-
-			xmlReader.readNext();
-
+			qDebug() <<  "///" << val.name() << "///" << val.value();
 		}
-		file.close(); // Закрываем файл
 
+		// if(xmlReader.isEndElement())
+        //    xmlReader.readNext();
+           // xmlReader.readNextStartElement();
+
+		//xmlReader.readNext();
 
 	}
+		
+   // file.close(); // Закрываем файл
 
 }
 
