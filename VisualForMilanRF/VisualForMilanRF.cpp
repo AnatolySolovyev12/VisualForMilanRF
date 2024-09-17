@@ -303,11 +303,13 @@ void VisualForMilanRF::test1()
 	{
 
 		xmlReader.readNextStartElement(); 
+        if(xmlReader.isStartElement())
+            qDebug() << "Start " << xmlReader.name();
 
         if (xmlReader.isEndElement()) // чтобы не выводить повторно имя элемента
-            continue;
+            qDebug() << "End " << xmlReader.name();
 
-		qDebug() << xmlReader.name();
+		//qDebug() << xmlReader.name();
 
 
 		for (QXmlStreamAttribute& val : xmlReader.attributes())
@@ -324,6 +326,26 @@ void VisualForMilanRF::test1()
 	}
 		
    // file.close(); // Закрываем файл
+
+
+    /*
+    * 
+    * Описание рекурсивной функции формирования дерева в программе:
+    * 
+    * 
+    * void tratata()
+    * {
+    * Если встречаем start
+    *   добавляем первый объект с его атрибутами согласно хмл.
+    * 
+    * 
+    * далее проверка на встречу со ЕНД, если да завершаем функцию
+    * 
+    * если нет и опять СТАРТ то повторно вызывваем функцию в рекурсию
+    * 
+    * 
+    * 
+    * */
 
 }
 
