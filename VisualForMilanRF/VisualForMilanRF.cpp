@@ -12,14 +12,15 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(closeEditor(QTreeWidgetItem*)));
     connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(otherItemWasChecked(QTreeWidgetItem*)));
     connect(ui.pushButtonFinder, &QPushButton::clicked, this, &VisualForMilanRF::adressFinder);
-   
+    connect(ui.pushButtonTest_2, &QPushButton::clicked, this, &VisualForMilanRF::exportXml);
+
     middleColumn = 0;
 
 
 
     connect(ui.pushButtonCheckChannel, &QPushButton::clicked, this, &VisualForMilanRF::test1);
 
-    connect(ui.pushButtonTest_2, &QPushButton::clicked, this, &VisualForMilanRF::test2);
+
 
 }
 
@@ -193,12 +194,194 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих зна
     }
 }
 
+void VisualForMilanRF::exportXml()
+{
+    QString savedFile = QFileDialog::getSaveFileName(0, "Save XML", "", "*.xml");
+    QFile file(savedFile);
+    file.open(QIODevice::WriteOnly);
+
+    QXmlStreamWriter xmlWriter(&file); // инициализируем объект QXmlStreamWriter ссылкой на объект с которым будем работать
+
+    xmlWriter.setDevice(&file);
+    xmlWriter.setAutoFormatting(true); // необходимо для автоматического перехода на новую строку
+    xmlWriter.setAutoFormattingIndent(2); // задаём количество пробелов в отступе (по умолчанию 4)
+    xmlWriter.writeStartDocument(); // пишет в шапке кодировку документа
+
+    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
+
+    recursionXmlWriter(any, xmlWriter);
+
+    xmlWriter.writeEndElement(); // General
+    xmlWriter.writeEndDocument();
+
+    file.close();
+}
+
+void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWriter& someXmlWriter)
+{
+    if (some->childCount())
+    {
+        someXmlWriter.writeStartElement(some->text(0)); // отркывает начальный элемент "лестницы" xml
+
+        someXmlWriter.writeAttribute("ID", some->text(1)); // присваиваем атрибуты внутри открытого первого элемента
+
+        someXmlWriter.writeAttribute("Number", some->text(2));
+
+        if (some->text(2) != nullptr)
+        {
+            for (int count = 4; count <= 7; count++)
+            {
+                if (some->checkState(count) == Qt::Unchecked)
+                    someXmlWriter.writeAttribute("chekChannel", "0");
+                else
+                    someXmlWriter.writeAttribute("chekChannel", "1");
+            }
+        }
+
+        int count = some->childCount();
+
+        for (int x = 0; x < count; x++)
+        {
+            recursionXmlWriter(some->child(x), someXmlWriter);
+        }
+        
+        someXmlWriter.writeEndElement();
+    }
+    else
+    {
+        someXmlWriter.writeStartElement(some->text(0)); // отркывает начальный элемент "лестницы" xml
+
+        someXmlWriter.writeAttribute("ID", some->text(1)); // присваиваем атрибуты внутри открытого первого элемента
+
+        someXmlWriter.writeAttribute("Number", some->text(2));
+
+        if (some->text(2) != nullptr)
+        {
+            for (int count = 4; count <= 7; count++)
+            {
+                if (some->checkState(count) == Qt::Unchecked)
+                    someXmlWriter.writeAttribute("chekChannel", "0");
+                else
+                    someXmlWriter.writeAttribute("chekChannel", "1");
+            }
+        }
+
+        someXmlWriter.writeEndElement();
+
+        return;
+    }
+}
+
+
+
+
 
 
 
 void VisualForMilanRF::test1()
 {
-    
+
+    /* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
+    QFile file("TEST");
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        /*
+        QMessageBox::warning(this,
+            "Ошибка файла",
+            "Не удалось открыть файл",
+            QMessageBox::Ok);
+            */
+    }
+    else {
+        /* Создаем объект, с помощью которого осуществляется чтение из файла */
+        QXmlStreamReader xmlReader;
+        xmlReader.setDevice(&file);
+        xmlReader.readNext();   // Переходит к первому элементу в файле
+
+        /* Крутимся в цикле до тех пор, пока не достигнем конца документа
+         * */
+        while (!xmlReader.atEnd())
+        {
+            /* Проверяем, является ли элемент началом тега
+             * */
+            if (xmlReader.isStartElement())
+            {
+                /* Проверяем, относится ли тег к одному из чекбоксов.
+                 * Если "ДА", то выполняем проверку атрибута чекбокса
+                 * и записи для lineEdit
+                 * */
+                if (xmlReader.name() == "checkBox_1")
+                {
+                    /* Забираем все атрибуты тега и перебираем их для проверки на соответствие
+                     * нужному нам атрибуту
+                     * */
+                    foreach(const QXmlStreamAttribute & attr, xmlReader.attributes()) {
+                        /* Если найден нужный атрибут, то по его значению устанавливаем
+                         * состояние чекбокса
+                         * */
+                        if (attr.name().toString() == "boolean") {
+                            QString attribute_value = attr.value().toString();
+                            ui->checkBox->setChecked((QString::compare(attribute_value, "true") == 0) ? true : false);
+
+                        }
+                    }
+                    /* забираем текст из тела тега и вставляем его соответствующий lineEdit
+                     * */
+                    ui->lineEditCB1->setText(xmlReader.readElementText());
+
+                    /* аналогично работаем с остальными тегами */
+                }
+                else if (xmlReader.name() == "checkBox_2") {
+                    foreach(const QXmlStreamAttribute & attr, xmlReader.attributes()) {
+                        if (attr.name().toString() == "boolean") {
+                            QString attribute_value = attr.value().toString();
+                            ui->checkBox_2->setChecked((QString::compare(attribute_value, "true") == 0) ? true : false);
+
+                        }
+                    }
+                    ui->lineEditCB2->setText(xmlReader.readElementText());
+                }
+                else if (xmlReader.name() == "checkBox_3") {
+                    foreach(const QXmlStreamAttribute & attr, xmlReader.attributes()) {
+                        if (attr.name().toString() == "boolean") {
+                            QString attribute_value = attr.value().toString();
+                            ui->checkBox_3->setChecked((QString::compare(attribute_value, "true") == 0) ? true : false);
+
+                        }
+                    }
+                    ui->lineEditCB3->setText(xmlReader.readElementText());
+                }
+            }
+            xmlReader.readNext(); // Переходим к следующему элементу файла
+        }
+        file.close(); // Закрываем файл
+
+        /* В данном коде не осуществляется проверка на закрытие тега
+         * поскольку в этом нет необходимости, но функционал QXmlStreamReader это позволяет
+         * */
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     QTreeWidgetItem* any = nullptr;
 
     if (ui.treeWidget->currentItem() == nullptr)
@@ -221,129 +404,4 @@ void VisualForMilanRF::test1()
     offChanger = false;
 
     VisualForMilanRF::closeEditor(any);
-    
-}
-
-void VisualForMilanRF::test2()
-{
-    /*
-    QString savedFile = QFileDialog::getSaveFileName(0, "Save XML", "", "*.xml");
-    QFile file(savedFile);
-    file.open(QIODevice::WriteOnly);
-   
-   // QTextStream out(&file); // поток записываемых данных направляем в файл
-   // out << "12345" << Qt::endl;
-
-    QXmlStreamWriter xmlWriter(&file); // инициализируем объект QXmlStreamWriter ссылкой на объект с которым будем работать
-
-    xmlWriter.setDevice(&file);
-    xmlWriter.setAutoFormatting(true); // необходимо для автоматического перехода на новую строку
-    xmlWriter.setAutoFormattingIndent(2); // задаём количество пробелов в отступе (по умолчанию 4)
-    xmlWriter.writeStartDocument(); // пишет в шапке кодировку документа
-
-    xmlWriter.writeStartElement("General"); // отркывает начальный элемент "лестницы" xml
-
-   // QTreeWidgetItem* any = ui.treeWidget->currentItem(); // присваиваем указателю выбранную ячейку
-   // int column = ui.treeWidget->currentColumn(); // присваиваем переменной номер текущего столбца (отсчёт начинается с 0-ого)
-
-    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
-
-    QString temporaryStr = ui.treeWidget->topLevelItem(0)->text(1);
-
-    xmlWriter.writeAttribute("ID", temporaryStr); // присваиваем атрибуты внутри открытого первого элемента
-
-    temporaryStr = ui.treeWidget->topLevelItem(0)->text(2);
-
-    xmlWriter.writeAttribute("Number", temporaryStr);
     */
-
-    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
-
-   // qDebug() << any->text(0);
-
-    recursionXmlWriter(any);
-
-    /*
-    if (any->childCount())
-    {
-        int count = any->childCount();
-
-        for (int x = 0; x < count; x++)
-        {
-
-            qDebug() << any->child(x)->text(0);
-
-        }
-
-    }
-    else
-    {
-        qDebug() << any->text(0);
-        return;
-    }
-
-    */
-
-   // qDebug() << any->childCount();
-
-   // qDebug() << any->child(0)->text(0);
-
-   // xmlWriter.writeStartElement(ui.treeWidget->topLevelItem(2)->text(0));
-   // xmlWriter.writeEndElement();
-
-
-    /*
-    if (any->childCount())
-    {
-        int counter = any->childCount();
-
-        qDebug() << counter;
-
-        for (int countOfElement = 1; countOfElement < counter; countOfElement++)
-        {
-            ui.treeWidget->topLevelItem(countOfElement);
-
-            xmlWriter.writeStartElement(ui.treeWidget->topLevelItem(countOfElement)->text(0));
-
-            xmlWriter.writeAttribute("ID", ui.treeWidget->topLevelItem(countOfElement)->text(1));
-
-            xmlWriter.writeAttribute("Number", ui.treeWidget->topLevelItem(countOfElement)->text(2));
-
-            xmlWriter.writeEndElement();
-        }
-
-
-    }
-    */
-
-
-
-
-    //xmlWriter.writeEndElement(); // General
-
-   // xmlWriter.writeEndDocument();
-
-
-   // file.close();
-
-}
-
-void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some)
-{
-    if (some->childCount())
-    {
-        qDebug() << some->text(0);
-
-        int count = some->childCount();
-
-        for (int x = 0; x < count; x++)
-        {
-            recursionXmlWriter(some->child(x));
-        }
-    }
-    else
-    {
-        qDebug() << some->text(0);
-        return;
-    }
-}

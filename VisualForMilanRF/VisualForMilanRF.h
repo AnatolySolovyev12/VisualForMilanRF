@@ -22,12 +22,12 @@ public:
     void addItemInList();
     void deleteItemInList();
     void adressFinder();
+    void exportXml();
+    void recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWriter& someXmlWriter);
 
     void test1();
 
-    void test2();
 
-    void recursionXmlWriter(QTreeWidgetItem* some);
 
 private slots:
     void setData();
