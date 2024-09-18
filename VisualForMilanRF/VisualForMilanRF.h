@@ -28,6 +28,8 @@ public:
     void test1();
 
 
+    void recursionXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xmlReader);
+
 
 private slots:
     void setData();

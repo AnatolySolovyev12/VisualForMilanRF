@@ -290,104 +290,99 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 
 void VisualForMilanRF::test1()
 {
-
 	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
 	QFile file("123.xml");
     QXmlStreamReader xmlReader(&file);
 
     file.open(QFile::ReadWrite);
 
+    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0); // test fo import
 
-
-	while (!xmlReader.atEnd())
-	{
-
-		xmlReader.readNextStartElement(); 
-        if(xmlReader.isStartElement())
-            qDebug() << "Start " << xmlReader.name();
-
-        if (xmlReader.isEndElement()) // чтобы не выводить повторно имя элемента
-            qDebug() << "End " << xmlReader.name();
-
-		//qDebug() << xmlReader.name();
-
-
-		for (QXmlStreamAttribute& val : xmlReader.attributes())
-		{
-			qDebug() <<  "///" << val.name() << "///" << val.value();
-		}
-
-		// if(xmlReader.isEndElement())
-        //    xmlReader.readNext();
-           // xmlReader.readNextStartElement();
-
-		//xmlReader.readNext();
-
-	}
-		
-   // file.close(); // Закрываем файл
-
-
-    /*
-    * 
-    * Описание рекурсивной функции формирования дерева в программе:
-    * 
-    * 
-    * void tratata()
-    * {
-    * Если встречаем start
-    *   добавляем первый объект с его атрибутами согласно хмл.
-    * 
-    * 
-    * далее проверка на встречу со ЕНД, если да завершаем функцию
-    * 
-    * если нет и опять СТАРТ то повторно вызывваем функцию в рекурсию
-    * 
-    * 
-    * 
-    * */
-
+    recursionXmlReader(any, xmlReader);
 }
 
 
+void VisualForMilanRF::recursionXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xmlReader)
+{
+    QList <QTreeWidgetItem*> myList;
+
+    myList.push_back(some);
+
+    while (!xmlReader.atEnd())
+    {
+        xmlReader.readNextStartElement();
+
+        if (xmlReader.isStartElement())
+        {
+            if (some == ui.treeWidget->topLevelItem(0))
+            {
+                some = new QTreeWidgetItem(ui.treeWidget);
+            }
+            else
+                some = new QTreeWidgetItem(myList.constLast());
+
+            myList.push_back(some);
+
+            offChanger = true;
+
+            some->setBackground(0, QColor(221, 221, 221, 255));
+            some->setBackground(1, QColor(245, 216, 183, 255));
+            some->setBackground(2, QColor(217, 225, 187, 255));
+
+            some->setText(0, xmlReader.name().toString());
+
+            for (QXmlStreamAttribute& val : xmlReader.attributes())
+            {
+                if (val.name().toString() == "ID") some->setText(1, val.value().toString());
+
+                if (val.name().toString() == "Number") some->setText(2, val.value().toString());
+
+                if (val.name().toString() == "checkChannel1")
+                {
+                    if (val.value().toString() == "1")
+                        some->setCheckState(4, Qt::Checked);
+                    else
+                        some->setCheckState(4, Qt::Unchecked);
+                }
+
+                if (val.name().toString() == "checkChannel2")
+                {
+                    if (val.value().toString() == "1")
+                        some->setCheckState(5, Qt::Checked);
+                    else
+                        some->setCheckState(5, Qt::Unchecked);
+                }
+
+                if (val.name().toString() == "checkChannel3")
+                {
+                    if (val.value().toString() == "1")
+                        some->setCheckState(6, Qt::Checked);
+                    else
+                        some->setCheckState(6, Qt::Unchecked);
+                }
+
+                if (val.name().toString() == "checkChannel4")
+                {
+                    if (val.value().toString() == "1")
+                        some->setCheckState(7, Qt::Checked);
+                    else
+                        some->setCheckState(7, Qt::Unchecked);
+                }
+            }
+
+            offChanger = false;
+
+            VisualForMilanRF::closeEditor(some);
+
+        }
 
 
+        if (xmlReader.isEndElement()) // чтобы не выводить повторно имя элемента
+            myList.pop_back();
 
+    }
 
+    ui.treeWidget->takeTopLevelItem(0);
 
+}
 
-
-
-
-
-
-
-
-
-
-
-
-    /*
-    QTreeWidgetItem* any = nullptr;
-
-    if (ui.treeWidget->currentItem() == nullptr)
-        any = new QTreeWidgetItem(ui.treeWidget);
-    else
-        any = new QTreeWidgetItem(ui.treeWidget->currentItem());
-
-    int column = ui.treeWidget->currentColumn();
-
-    offChanger = true;
-
-    any->setText(0, "new");
-
-    any->setText(2, "11111");
-
-    any->setBackground(0, QColor(221, 221, 221, 255));
-    any->setBackground(1, QColor(245, 216, 183, 255));
-    any->setBackground(2, QColor(217, 225, 187, 255));
-
-    offChanger = false;
-
-    VisualForMilanRF::closeEditor(any);
-    */
