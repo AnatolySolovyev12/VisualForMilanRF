@@ -296,7 +296,6 @@ void VisualForMilanRF::importXml()
         return;
     }
 
-
 	QFile file(addFileDonor);
     QXmlStreamReader xmlReader(&file);
 
@@ -382,9 +381,6 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xm
         }
 
         if (xmlReader.isEndElement())
-        if (xmlReader.isEndElement()) // чтобы не выводить повторно имя элемента
-        if (xmlReader.isEndElement()) // чтобы не выводить повторно имя элемента
-        if (xmlReader.isEndElement()) // чтобы не выводить повторно имя элемента
             myList.pop_back();
     }
 
