@@ -1,2 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<General ID="1" Number="2" checkChannel1="0" checkChannel2="1" checkChannel3="0" checkChannel4="1"/>
+<General ID="" Number="111" checkChannel1="1" checkChannel2="0" checkChannel3="0" checkChannel4="0">
+  <a ID="1" Number=""/>
+  <b ID="2" Number="222" checkChannel1="0" checkChannel2="1" checkChannel3="0" checkChannel4="0">
+    <c ID="3" Number=""/>
+    <d ID="" Number="">
+      <e ID="" Number=""/>
+      <f ID="4" Number=""/>
+      <g ID="5" Number="333" checkChannel1="0" checkChannel2="0" checkChannel3="1" checkChannel4="0"/>
+    </d>
+    <h ID="6" Number=""/>
+    <i ID="" Number="">
+      <new ID="" Number=""/>
+      <new ID="" Number=""/>
+      <new ID="" Number=""/>
+    </i>
+  </b>
+  <j ID="" Number="444" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="1"/>
+  <k ID="" Number="">
+    <l ID="7" Number=""/>
+    <m ID="8" Number="">
+      <n ID="9" Number="555" checkChannel1="0" checkChannel2="0" checkChannel3="1" checkChannel4="0"/>
+      <o ID="" Number="">
+        <p ID="" Number=""/>
+        <q ID="" Number="666" checkChannel1="1" checkChannel2="1" checkChannel3="1" checkChannel4="1"/>
+      </o>
+    </m>
+    <r ID="10" Number=""/>
+  </k>
+  <s ID="11" Number="777" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0"/>
+</General>

@@ -138,20 +138,20 @@
      <string>F</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButtonCheckChannel">
+   <widget class="QPushButton" name="pushButtonImport">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>160</y>
+      <y>130</y>
       <width>20</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>✓</string>
+     <string>Im</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButtonTest_2">
+   <widget class="QPushButton" name="pushButtonExport">
     <property name="geometry">
      <rect>
       <x>10</x>
