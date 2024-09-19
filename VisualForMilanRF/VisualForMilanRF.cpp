@@ -283,11 +283,6 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 }
 
 
-
-
-
-
-
 void VisualForMilanRF::test1()
 {
 	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
@@ -376,13 +371,10 @@ void VisualForMilanRF::recursionXmlReader(QTreeWidgetItem* some, QXmlStreamReade
 
         }
 
-
         if (xmlReader.isEndElement()) // чтобы не выводить повторно имя элемента
             myList.pop_back();
-
     }
 
     ui.treeWidget->takeTopLevelItem(0);
-
 }
 
