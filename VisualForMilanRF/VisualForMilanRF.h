@@ -25,10 +25,10 @@ public:
     void exportXml();
     void recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWriter& someXmlWriter);
 
-    void test1();
+    void importXml();
 
 
-    void recursionXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xmlReader);
+    void loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xmlReader);
 
 
 private slots:

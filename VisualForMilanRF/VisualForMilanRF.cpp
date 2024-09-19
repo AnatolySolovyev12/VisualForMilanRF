@@ -12,13 +12,16 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(closeEditor(QTreeWidgetItem*)));
     connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(otherItemWasChecked(QTreeWidgetItem*)));
     connect(ui.pushButtonFinder, &QPushButton::clicked, this, &VisualForMilanRF::adressFinder);
-    connect(ui.pushButtonTest_2, &QPushButton::clicked, this, &VisualForMilanRF::exportXml);
+    connect(ui.pushButtonExport, &QPushButton::clicked, this, &VisualForMilanRF::exportXml);
+    connect(ui.pushButtonImport, &QPushButton::clicked, this, &VisualForMilanRF::importXml);
+
+
 
     middleColumn = 0;
 
 
 
-    connect(ui.pushButtonCheckChannel, &QPushButton::clicked, this, &VisualForMilanRF::test1);
+
 
 
 
@@ -282,27 +285,30 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
     }
 }
 
-
-
-
-
-
-
-void VisualForMilanRF::test1()
+void VisualForMilanRF::importXml()
 {
 	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
-	QFile file("123.xml");
+
+    QString addFileDonor = QFileDialog::getOpenFileName(0, "Choose XML for import", "", "*.xml");
+
+    if (addFileDonor == "")
+    {
+        return;
+    }
+
+
+	QFile file(addFileDonor);
     QXmlStreamReader xmlReader(&file);
 
     file.open(QFile::ReadWrite);
 
     QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0); // test fo import
 
-    recursionXmlReader(any, xmlReader);
+    loopXmlReader(any, xmlReader);
 }
 
 
-void VisualForMilanRF::recursionXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xmlReader)
+void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xmlReader)
 {
     QList <QTreeWidgetItem*> myList;
 
@@ -373,16 +379,12 @@ void VisualForMilanRF::recursionXmlReader(QTreeWidgetItem* some, QXmlStreamReade
             offChanger = false;
 
             VisualForMilanRF::closeEditor(some);
-
         }
 
-
-        if (xmlReader.isEndElement()) // чтобы не выводить повторно имя элемента
+        if (xmlReader.isEndElement())
             myList.pop_back();
-
     }
 
     ui.treeWidget->takeTopLevelItem(0);
-
 }
 
