@@ -15,16 +15,7 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.pushButtonExport, &QPushButton::clicked, this, &VisualForMilanRF::exportXml);
     connect(ui.pushButtonImport, &QPushButton::clicked, this, &VisualForMilanRF::importXml);
 
-
-
     middleColumn = 0;
-
-
-
-
-
-
-
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -301,7 +292,7 @@ void VisualForMilanRF::importXml()
 
     file.open(QFile::ReadWrite);
 
-    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0); // test fo import
+    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
 
     loopXmlReader(any, xmlReader);
 }
