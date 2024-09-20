@@ -11,6 +11,8 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamAttribute>
 
+#include <QtSql/QtSql>
+
 class VisualForMilanRF : public QMainWindow
 {
     Q_OBJECT
@@ -24,11 +26,13 @@ public:
     void adressFinder();
     void exportXml();
     void recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWriter& someXmlWriter);
-
     void importXml();
-
-
     void loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xmlReader);
+
+
+    void test();
+
+    bool connectDB();
 
 
 private slots:
@@ -43,4 +47,7 @@ private:
     QTreeWidgetItem* middleItem = nullptr;
     int middleColumn;
     bool offChanger = false;
+
+
+    QSqlDatabase mw_db; // экземпляр подключения к БД
 };
