@@ -301,7 +301,7 @@ void VisualForMilanRF::importXml()
 
     file.open(QFile::ReadWrite);
 
-    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0); // test fo import
+    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
 
     loopXmlReader(any, xmlReader);
 }
