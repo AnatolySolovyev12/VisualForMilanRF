@@ -397,15 +397,10 @@ bool VisualForMilanRF::connectDB()
     mw_db = QSqlDatabase::addDatabase("QSQLITE", "ReadOnlyFromGUI"); // указываем какой использовать драйвер для подключения к БД и имя подключения. Если имя не задано то по умолчанию подключаемся к этой базе. Вроде так.
    // mw_db.setHostName("\\ENERGOSFERA-GES\Release");
    //mw_db.setPort(8080);
-    //10.86.142.14
-    //10.0.200.13
-    //10.0.20.11
-    //10.0.238.152
-
-
     mw_db.setDatabaseName("//ENERGOSFERA-GES//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
-    //mw_db.setUserName("Denisov");
-   // mw_db.setPassword("Dd4568520");
+   //mw_db.setDatabaseName("//10.86.142.14//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
+   // mw_db.setUserName("Администратор");
+   // mw_db.setPassword("RootToor#");
 
     mw_db.setConnectOptions("QSQLITE_OPEN_READONLY");
 
