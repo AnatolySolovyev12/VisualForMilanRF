@@ -15,7 +15,16 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.pushButtonExport, &QPushButton::clicked, this, &VisualForMilanRF::exportXml);
     connect(ui.pushButtonImport, &QPushButton::clicked, this, &VisualForMilanRF::importXml);
 
+
+
+    connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::test);
+    
+
+   
+
     middleColumn = 0;
+
+
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -378,3 +387,32 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xm
     ui.treeWidget->takeTopLevelItem(0);
 }
 
+void VisualForMilanRF::test()
+{
+    connectDB();
+}
+
+bool VisualForMilanRF::connectDB()
+{
+    mw_db = QSqlDatabase::addDatabase("QSQLITE", "ReadOnlyFromGUI"); // указываем какой использовать драйвер для подключения к БД и имя подключения. Если имя не задано то по умолчанию подключаемся к этой базе. Вроде так.
+   // mw_db.setHostName("\\ENERGOSFERA-GES\Release");
+   //mw_db.setPort(8080);
+    mw_db.setDatabaseName("//ENERGOSFERA-GES//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
+   //mw_db.setDatabaseName("//10.86.142.14//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
+   // mw_db.setUserName("Администратор");
+   // mw_db.setPassword("RootToor#");
+
+    mw_db.setConnectOptions("QSQLITE_OPEN_READONLY");
+
+    if (!mw_db.open()) // открываем БД. Если не открывает то вернёт false
+    {
+        qDebug() << "Cannot open database: " << mw_db.lastError();
+        return false;
+    }
+    else
+    {
+        qDebug() << "DB OPEN";
+    }
+
+    return true;
+}
