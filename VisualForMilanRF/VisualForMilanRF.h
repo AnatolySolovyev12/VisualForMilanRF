@@ -34,6 +34,8 @@ public:
 
     bool connectDB();
 
+    void recursionDbSqlReader(QTreeWidgetItem* some);
+
 
 private slots:
     void setData();
