@@ -14,14 +14,11 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.pushButtonFinder, &QPushButton::clicked, this, &VisualForMilanRF::adressFinder);
     connect(ui.pushButtonExport, &QPushButton::clicked, this, &VisualForMilanRF::exportXml);
     connect(ui.pushButtonImport, &QPushButton::clicked, this, &VisualForMilanRF::importXml);
-
-
-
-    connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::test);
+    connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::refresh);
     
 
-   
-
+    connect(ui.pushButtonBrowse, &QPushButton::clicked, this, &VisualForMilanRF::browse);
+    
     middleColumn = 0;
 
 
@@ -108,17 +105,24 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрытия редакт
     {
         offChanger = true;
 
+        any->setBackground(3, QColor("white"));
+        any->setText(3, "");
+
         any->setBackground(4, QColor("white"));
         any->setData(4, Qt::CheckStateRole, QVariant());
+        any->setText(4, "");
 
         any->setBackground(5, QColor("white"));
         any->setData(5, Qt::CheckStateRole, QVariant());
+        any->setText(5, "");
 
         any->setBackground(6, QColor("white"));
         any->setData(6, Qt::CheckStateRole, QVariant());
+        any->setText(6, "");
 
         any->setBackground(7, QColor("white"));
         any->setData(7, Qt::CheckStateRole, QVariant());
+        any->setText(7, "");
 
         offChanger = false;
     }
@@ -306,7 +310,6 @@ void VisualForMilanRF::importXml()
     loopXmlReader(any, xmlReader);
 }
 
-
 void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xmlReader)
 {
     QList <QTreeWidgetItem*> myList;
@@ -387,13 +390,7 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xm
     ui.treeWidget->takeTopLevelItem(0);
 }
 
-
-
-
-
-
-
-void VisualForMilanRF::test()
+void VisualForMilanRF::refresh()
 {
     if (connectDB())
     {
@@ -401,34 +398,6 @@ void VisualForMilanRF::test()
 
         recursionDbSqlReader(some);        
     }
-}
-
-bool VisualForMilanRF::connectDB()
-{
-    // почему то добавление имени подключения не даёт делать запросы.
-
-	mw_db = QSqlDatabase::addDatabase("QSQLITE"); // указываем какой использовать драйвер для подключения к БД и имя подключения. Если имя не задано то по умолчанию подключаемся к этой базе. Вроде так.
-	//mw_db.setDatabaseName("//ENERGOSFERA-GES//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
-
-
-    mw_db.setDatabaseName("C://Users//admin//source//repos//PortListening//x64//Release//DataBaseMilanRF");
-	// mw_db.setHostName("\\ENERGOSFERA-GES\Release");
-	//mw_db.setPort(8080);
-	//mw_db.setDatabaseName("//10.86.142.14//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
-    // mw_db.setUserName("Администратор");
-    // mw_db.setPassword("RootToor#");
-
-	mw_db.setConnectOptions("QSQLITE_OPEN_READONLY");
-
-	if (!mw_db.open())
-	{
-		qDebug() << "Cannot open database: " << mw_db.lastError();
-		return false;
-	}
-	else
-	{
-		qDebug() << "DB OPEN";
-	}
 }
 
 void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
@@ -507,7 +476,65 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
                     some->setBackground(3, QColor(255, 143, 143, 255));
 			}
 		}
-
 		return;
 	}
+}
+
+bool VisualForMilanRF::connectDB()
+{
+    // почему то добавление имени подключения не даёт делать запросы.
+    QFile file("browse.txt");
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Don't find browse file. Add a directory with a database.";
+        return true;
+    }
+
+	QTextStream out(&file);
+
+	QString line = out.readLine(); // метод readLine() считывает одну строку из потока
+
+    mw_db = QSqlDatabase::addDatabase("QSQLITE"); // указываем какой использовать драйвер для подключения к БД и имя подключения. Если имя не задано то по умолчанию подключаемся к этой базе. Вроде так.
+    //mw_db.setDatabaseName("//ENERGOSFERA-GES//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
+    
+   // mw_db.setDatabaseName("C://Users//admin//source//repos//PortListening//x64//Release//DataBaseMilanRF");
+    mw_db.setDatabaseName(line);
+    // mw_db.setHostName("\\ENERGOSFERA-GES\Release");
+    //mw_db.setPort(8080);
+    //mw_db.setDatabaseName("//10.86.142.14//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
+    // mw_db.setUserName("Администратор");
+    // mw_db.setPassword("RootToor#");
+
+    mw_db.setConnectOptions("QSQLITE_OPEN_READONLY");
+
+    if (!mw_db.open())
+    {
+        qDebug() << "Cannot open database: " << mw_db.lastError();
+        return false;
+    }
+    else
+    {
+        qDebug() << "DataBase was OPEN";
+    }
+}
+
+void VisualForMilanRF::browse()
+{
+    QFile file("browse.txt");
+
+    if (!(file.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
+    {
+        qDebug() << "Don't find browse file. Add a directory with a database.";
+        return;
+    }
+
+    QTextStream in(&file);
+
+    QString addFileDonor = QFileDialog::getOpenFileName(0, "Choose directory with a database", "", "");
+
+    in << addFileDonor << Qt::endl;
+
+    if (addFileDonor == "")
+        file.remove();
 }

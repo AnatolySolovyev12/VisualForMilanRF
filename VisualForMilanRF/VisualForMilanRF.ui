@@ -45,22 +45,22 @@
     </column>
     <column>
      <property name="text">
-      <string>Value 1</string>
+      <string>Channel 1</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Value 2</string>
+      <string>Channel 2</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Value 3</string>
+      <string>Channel 3</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Value 4</string>
+      <string>Channel 4</string>
      </property>
     </column>
     <item>
@@ -135,7 +135,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>F</string>
+     <string>Fd</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonImport">
@@ -168,13 +168,26 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>210</y>
+      <y>160</y>
       <width>20</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>T</string>
+     <string>Rf</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonBrowse">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>190</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Br</string>
     </property>
    </widget>
   </widget>
