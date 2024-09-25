@@ -390,11 +390,11 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xm
     ui.treeWidget->takeTopLevelItem(0);
 }
 
+
+
+
+
 void VisualForMilanRF::refresh()
-
-
-
-void VisualForMilanRF::test()
 {
     if (connectDB())
     {
