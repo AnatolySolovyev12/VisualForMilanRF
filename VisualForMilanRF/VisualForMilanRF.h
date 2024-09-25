@@ -28,13 +28,13 @@ public:
     void recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWriter& someXmlWriter);
     void importXml();
     void loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xmlReader);
-
-
-    void test();
-
+    void refresh();
     bool connectDB();
-
     void recursionDbSqlReader(QTreeWidgetItem* some);
+
+
+
+    void browse();
 
 
 private slots:
