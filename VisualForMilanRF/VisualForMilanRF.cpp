@@ -389,10 +389,6 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xm
 
 
 
-
-
-
-
 void VisualForMilanRF::test()
 {
     if (connectDB())
