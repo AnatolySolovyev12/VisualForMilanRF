@@ -31,10 +31,8 @@ public:
     void refresh();
     bool connectDB();
     void recursionDbSqlReader(QTreeWidgetItem* some);
-
-
-
     void browse();
+    void report();
 
 
 private slots:
@@ -49,6 +47,7 @@ private:
     QTreeWidgetItem* middleItem = nullptr;
     int middleColumn;
     bool offChanger = false;
+    QString line;
 
 
     QSqlDatabase mw_db; // экземпляр подключения к БД

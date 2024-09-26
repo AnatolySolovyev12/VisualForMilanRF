@@ -15,13 +15,15 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.pushButtonExport, &QPushButton::clicked, this, &VisualForMilanRF::exportXml);
     connect(ui.pushButtonImport, &QPushButton::clicked, this, &VisualForMilanRF::importXml);
     connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::refresh);
-    
-
     connect(ui.pushButtonBrowse, &QPushButton::clicked, this, &VisualForMilanRF::browse);
     
     middleColumn = 0;
 
+    connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
 
+
+
+    
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -400,7 +402,9 @@ void VisualForMilanRF::refresh()
     {
         QTreeWidgetItem* some = ui.treeWidget->topLevelItem(0);
 
-        recursionDbSqlReader(some);        
+        recursionDbSqlReader(some);    
+
+        mw_db.removeDatabase(mw_db.connectionName());
     }
 }
 
@@ -497,7 +501,7 @@ bool VisualForMilanRF::connectDB()
 
 	QTextStream out(&file);
 
-	QString line = out.readLine(); // метод readLine() считывает одну строку из потока
+	line = out.readLine(); // метод readLine() считывает одну строку из потока
 
     mw_db = QSqlDatabase::addDatabase("QSQLITE"); // указываем какой использовать драйвер для подключения к БД и имя подключения. Если имя не задано то по умолчанию подключаемся к этой базе. Вроде так.
     //mw_db.setDatabaseName("//ENERGOSFERA-GES//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
@@ -521,6 +525,8 @@ bool VisualForMilanRF::connectDB()
     {
         qDebug() << "DataBase was OPEN";
     }
+
+    file.close();
 }
 
 void VisualForMilanRF::browse()
@@ -541,4 +547,18 @@ void VisualForMilanRF::browse()
 
     if (addFileDonor == "")
         file.remove();
+
+    file.close();
+}
+
+void VisualForMilanRF::report()
+{
+    QString savedFile = QFileDialog::getSaveFileName(0, "Save Excel file", "", "*.xls");
+    QFile file(savedFile);
+    file.open(QIODevice::WriteOnly);
+
+
+
+
+
 }

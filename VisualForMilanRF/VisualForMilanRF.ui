@@ -190,6 +190,19 @@
      <string>Br</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButtonReport">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>280</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Rp</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
