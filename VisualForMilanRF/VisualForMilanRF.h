@@ -13,6 +13,10 @@
 
 #include <QtSql/QtSql>
 
+#include <QAxObject>
+
+#include <QTableWidgetItem>
+
 class VisualForMilanRF : public QMainWindow
 {
     Q_OBJECT
@@ -32,8 +36,11 @@ public:
     bool connectDB();
     void recursionDbSqlReader(QTreeWidgetItem* some);
     void browse();
-    void report();
 
+
+
+    void recursionXlsWriter(QTreeWidgetItem* some);
+    void report();
 
 private slots:
     void setData();
@@ -48,7 +55,15 @@ private:
     int middleColumn;
     bool offChanger = false;
     QString line;
-
-
     QSqlDatabase mw_db; // экземпляр подключения к БД
+
+
+    QAxObject* excelDonor = nullptr;
+    QAxObject* workbooksDonor = nullptr;
+    QAxObject* workbookDonor = nullptr;
+    QAxObject* sheetsDonor = nullptr;
+    QAxObject* sheetDonor = nullptr;
+    QAxObject* cell = nullptr;
+    QAxObject* paste = nullptr;
+    QTableWidgetItem* item = nullptr;
 };
