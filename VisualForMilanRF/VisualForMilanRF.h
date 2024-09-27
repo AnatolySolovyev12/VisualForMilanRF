@@ -66,4 +66,5 @@ private:
     QAxObject* cell = nullptr;
     QAxObject* paste = nullptr;
     QTableWidgetItem* item = nullptr;
+    int countRow = 1;
 };

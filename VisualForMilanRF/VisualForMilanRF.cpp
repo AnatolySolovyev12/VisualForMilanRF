@@ -573,7 +573,10 @@ void VisualForMilanRF::report()
     QTreeWidgetItem* some = ui.treeWidget->topLevelItem(0);
 
 
+
     recursionXlsWriter(some);
+
+    countRow = 1;
 
     delete cell;
     workbookDonor->dynamicCall("Close()"); // об€зательно используем в работе с Excel иначе документы будет фbоном открыт в системе
@@ -586,19 +589,19 @@ void VisualForMilanRF::report()
 
 void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 {
-    int countRow = 1;
+
 
     if (some->childCount())
     {
-        if (some->text(2) != nullptr)
+        if (some->text(1) != nullptr)
         {
             for (int column = 1; column <= 8; column++) {
 
-                if (column == 2) continue;
+               // if (column == 2 || column == 3) continue;
 
                 cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой €чейкой работать
 
-                cell->dynamicCall("SetValue(double)", some->text(column));
+                cell->dynamicCall("SetValue(QString)", some->text(column));
 
             }
             countRow++;
@@ -614,15 +617,15 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
     }
     else
     {
-        if (some->text(2) != nullptr)
+        if (some->text(1) != nullptr)
         {
             for (int column = 1; column <= 8; column++) {
                 
-                if (column == 2) continue;
+               // if (column == 2 || column == 3) continue;
 
 				cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой €чейкой работать
 
-                cell->dynamicCall("SetValue(double)", some->text(column));
+                cell->dynamicCall("SetValue(QString)", some->text(column));
                 
             }
             countRow++;
