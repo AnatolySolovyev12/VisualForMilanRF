@@ -22,7 +22,7 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
 
 
-
+    startingImportXml();
     
 }
 
@@ -310,6 +310,25 @@ void VisualForMilanRF::importXml()
     QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
 
     loopXmlReader(any, xmlReader);
+
+    file.close();
+
+    QFile txtFile("tree.txt");
+
+    if (!(txtFile.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - дл€ очистки содержимого файла
+    {
+        qDebug() << "Don't find browse file. Add a directory with a tree.";
+        return;
+    }
+
+    QTextStream in(&txtFile);
+
+    in << addFileDonor << Qt::endl;
+
+    if (addFileDonor == "")
+        txtFile.remove();
+
+    txtFile.close();
 }
 
 void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader &xmlReader)
@@ -547,20 +566,19 @@ void VisualForMilanRF::browse()
     file.close();
 }
 
-
 void VisualForMilanRF::report()
 {
-   // QString savedFile = "C://Users//admin//Desktop//12345.xlsx";
-    QString savedFile = QFileDialog::getOpenFileName(0, "Save Excel file", "", "*.xls *.xlsx");
-   // QFile file(savedFile);
-   // file.open(QIODevice::WriteOnly);
-   // file.close();
+   // QString savedFile = QFileDialog::getOpenFileName(0, "Save Excel file", "", "*.xls *.xlsx");
+
+    QString savedFile = QFileDialog::getSaveFileName(0, "Save Excel file", "", "*.xls");
+    QFile file(savedFile);
+    file.open(QIODevice::WriteOnly);
+    file.close();
 
     if (savedFile == "")
     {
         return;
     }
-
 
     excelDonor = new QAxObject("Excel.Application", 0);
     workbooksDonor = excelDonor->querySubObject("Workbooks");
@@ -569,40 +587,30 @@ void VisualForMilanRF::report()
     int listDonor = sheetsDonor->property("Count").toInt();
     sheetDonor = sheetsDonor->querySubObject("Item(int)", listDonor);// “ут определ€ем лист с которым будем работаь
 
-   
     QTreeWidgetItem* some = ui.treeWidget->topLevelItem(0);
-
-
 
     recursionXlsWriter(some);
 
     countRow = 1;
 
-    delete cell;
     workbookDonor->dynamicCall("Close()"); // об€зательно используем в работе с Excel иначе документы будет фbоном открыт в системе
     excelDonor->dynamicCall("Quit()");
-    delete workbookDonor;
     delete excelDonor;
 }
 
-
-
 void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 {
-
-
     if (some->childCount())
     {
         if (some->text(1) != nullptr)
         {
             for (int column = 1; column <= 8; column++) {
 
-               // if (column == 2 || column == 3) continue;
-
                 cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой €чейкой работать
 
-                cell->dynamicCall("SetValue(QString)", some->text(column));
+                if ((some->checkState(column) == Qt::Unchecked) && (column > 3)) continue;
 
+                cell->dynamicCall("SetValue(QString)", some->text(column));
             }
             countRow++;
         }
@@ -613,23 +621,66 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
         {
             recursionXlsWriter(some->child(x));
         }
-
     }
     else
     {
         if (some->text(1) != nullptr)
         {
             for (int column = 1; column <= 8; column++) {
-                
-               // if (column == 2 || column == 3) continue;
 
 				cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой €чейкой работать
 
+                if ((some->checkState(column) == Qt::Unchecked) && (column > 3)) continue;
+
                 cell->dynamicCall("SetValue(QString)", some->text(column));
-                
             }
             countRow++;
         }
         return;
     }
+}
+
+void VisualForMilanRF::startingImportXml()
+{
+    /* ќткрываем файл дл€ „тени€ с помощью пути, указанного в lineEditWrite */
+
+    QFile file("tree.txt");
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Don't find browse file. Add a directory with a tree.";
+        return;
+    }
+
+    QTextStream out(&file);
+
+    QString myLine = out.readLine(); // метод readLine() считывает одну строку из потока
+
+    if(myLine == "")
+    {
+        qDebug() << "Don't find browse file. Add a directory with a tree.";
+        return;
+    }
+
+    file.close();
+
+    QFile xmlFile(myLine);
+
+    if (xmlFile.exists())
+    {
+        xmlFile.open(QFile::ReadWrite);
+    }
+    else
+    {
+        qDebug() << "Don't find browse file. Add a directory with a tree.";
+        return;
+    }
+
+    QXmlStreamReader xmlReader(&xmlFile);
+
+    QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
+
+    loopXmlReader(any, xmlReader);
+
+    xmlFile.close();
 }

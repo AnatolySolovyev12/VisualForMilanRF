@@ -36,11 +36,10 @@ public:
     bool connectDB();
     void recursionDbSqlReader(QTreeWidgetItem* some);
     void browse();
-
-
-
     void recursionXlsWriter(QTreeWidgetItem* some);
     void report();
+
+    void startingImportXml();
 
 private slots:
     void setData();
