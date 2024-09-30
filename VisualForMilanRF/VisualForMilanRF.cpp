@@ -551,14 +551,89 @@ void VisualForMilanRF::browse()
     file.close();
 }
 
+
 void VisualForMilanRF::report()
 {
-    QString savedFile = QFileDialog::getSaveFileName(0, "Save Excel file", "", "*.xls");
-    QFile file(savedFile);
-    file.open(QIODevice::WriteOnly);
+   // QString savedFile = "C://Users//admin//Desktop//12345.xlsx";
+    QString savedFile = QFileDialog::getOpenFileName(0, "Save Excel file", "", "*.xls *.xlsx");
+   // QFile file(savedFile);
+   // file.open(QIODevice::WriteOnly);
+   // file.close();
+
+    if (savedFile == "")
+    {
+        return;
+    }
+
+
+    excelDonor = new QAxObject("Excel.Application", 0);
+    workbooksDonor = excelDonor->querySubObject("Workbooks");
+    workbookDonor = workbooksDonor->querySubObject("Open(const QString&)", savedFile); // 
+    sheetsDonor = workbookDonor->querySubObject("Worksheets");
+    int listDonor = sheetsDonor->property("Count").toInt();
+    sheetDonor = sheetsDonor->querySubObject("Item(int)", listDonor);// “ут определ€ем лист с которым будем работаь
+
+   
+    QTreeWidgetItem* some = ui.treeWidget->topLevelItem(0);
 
 
 
+    recursionXlsWriter(some);
+
+    countRow = 1;
+
+    delete cell;
+    workbookDonor->dynamicCall("Close()"); // об€зательно используем в работе с Excel иначе документы будет фbоном открыт в системе
+    excelDonor->dynamicCall("Quit()");
+    delete workbookDonor;
+    delete excelDonor;
+}
 
 
+
+void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
+{
+
+
+    if (some->childCount())
+    {
+        if (some->text(1) != nullptr)
+        {
+            for (int column = 1; column <= 8; column++) {
+
+               // if (column == 2 || column == 3) continue;
+
+                cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой €чейкой работать
+
+                cell->dynamicCall("SetValue(QString)", some->text(column));
+
+            }
+            countRow++;
+        }
+
+        int count = some->childCount();
+
+        for (int x = 0; x < count; x++)
+        {
+            recursionXlsWriter(some->child(x));
+        }
+
+    }
+    else
+    {
+        if (some->text(1) != nullptr)
+        {
+            for (int column = 1; column <= 8; column++) {
+                
+               // if (column == 2 || column == 3) continue;
+
+				cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой €чейкой работать
+
+                cell->dynamicCall("SetValue(QString)", some->text(column));
+                
+            }
+            countRow++;
+        }
+        return;
+    }
 }
