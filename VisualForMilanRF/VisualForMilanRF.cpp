@@ -19,6 +19,9 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
     startingImportXml();
     middleColumn = 0;
+
+    sBar = new QStatusBar();
+    QMainWindow::setStatusBar(sBar);
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -64,7 +67,7 @@ void VisualForMilanRF::setData() // в случае двойного клика в ячейку открываем р
 
     if (column > 2) return; // не даём редактировать дальше третьего столбца
 
-    qDebug() << "OPEN EDITOR";
+   // qDebug() << "OPEN EDITOR";
     
     middleColumn = column;
     middleItem = any;
@@ -125,7 +128,7 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрытия редакт
     }
     ui.treeWidget->closePersistentEditor(middleItem, middleColumn); // закрываем редактор
 
-    qDebug() << "CLOSE EDITOR";
+   // qDebug() << "CLOSE EDITOR";
 }
 
 void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем открытый редактор в случае переключения на другой элемент
@@ -133,7 +136,7 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем от
     if (offChanger) return;
 
     int column = ui.treeWidget->currentColumn();
-    qDebug() << "Checked " << any->text(column);
+   // qDebug() << "Checked " << any->text(column);
 
     if (any == middleItem && column == middleColumn)
         return;
@@ -154,7 +157,7 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем от
     ui.treeWidget->closePersistentEditor(middleItem, middleColumn);
     middleItem = nullptr;
 
-    qDebug() << "CLOSE EDITOR";
+   // qDebug() << "CLOSE EDITOR";
 }
 
 void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих значений с последующей записью в массив. Потом выводим полный адрес в первом столбце до найденного сопадения.
@@ -173,7 +176,8 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих зна
     {
         if (val->parent() == nullptr)
         {
-            qDebug() << ui.treeWidget->topLevelItem(0)->text(0);
+           // qDebug() << ui.treeWidget->topLevelItem(0)->text(0);
+            sBar->showMessage(ui.treeWidget->topLevelItem(0)->text(0), 10000);
             break;
         }
 
@@ -192,7 +196,7 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих зна
 
         strNumber.remove(0, 3);
 
-        qDebug() << strNumber;
+        sBar->showMessage(strNumber, 10000);
 
         strNumber = "";
     }
@@ -312,7 +316,8 @@ void VisualForMilanRF::importXml()
 
     if (!(txtFile.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
     {
-        qDebug() << "Don't find browse file. Add a directory with a tree.";
+       // qDebug() << "Don't find browse file. Add a directory with a tree.";
+        sBar->showMessage("Don't find browse file. Add a directory with a tree.", 10000);
         return;
     }
 
@@ -505,7 +510,8 @@ bool VisualForMilanRF::connectDB()
 
     if (!file.open(QIODevice::ReadOnly))
     {
-        qDebug() << "Don't find browse file. Add a directory with a database.";
+       // qDebug() << "Don't find browse file. Add a directory with a database.";
+        sBar->showMessage("Don't find browse file. Add a directory with a database.", 10000);
         return true;
     }
 
@@ -528,12 +534,15 @@ bool VisualForMilanRF::connectDB()
 
     if (!mw_db.open())
     {
-        qDebug() << "Cannot open database: " << mw_db.lastError();
+       // qDebug() << "Cannot open database: " << mw_db.lastError();
+        QString errorStr = "Cannot open database: " + mw_db.lastError().text();
+        sBar->showMessage(errorStr, 10000);
         return false;
     }
     else
     {
-        qDebug() << "DataBase was OPEN";
+      //  qDebug() << "DataBase was OPEN";
+        sBar->showMessage("DataBase was OPEN", 10000);
     }
 
     file.close();
@@ -545,7 +554,8 @@ void VisualForMilanRF::browse()
 
     if (!(file.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
     {
-        qDebug() << "Don't find browse file. Add a directory with a database.";
+        //qDebug() << "Don't find browse file. Add a directory with a database.";
+        sBar->showMessage("Don't find browse file. Add a directory with a database.", 10000);
         return;
     }
 
@@ -643,7 +653,8 @@ void VisualForMilanRF::startingImportXml()
 
     if (!file.open(QIODevice::ReadOnly))
     {
-        qDebug() << "Don't find browse file. Add a directory with a tree.";
+        //qDebug() << "Don't find browse file. Add a directory with a tree.";
+        sBar->showMessage("Don't find browse file. Add a directory with a tree.", 10000);
         return;
     }
 
@@ -653,7 +664,8 @@ void VisualForMilanRF::startingImportXml()
 
     if(myLine == "")
     {
-        qDebug() << "Don't find browse file. Add a directory with a tree.";
+        //qDebug() << "Don't find browse file. Add a directory with a tree.";
+        sBar->showMessage("Don't find browse file. Add a directory with a tree.", 10000);
         return;
     }
 
@@ -667,7 +679,8 @@ void VisualForMilanRF::startingImportXml()
     }
     else
     {
-        qDebug() << "Don't find browse file. Add a directory with a tree.";
+        //qDebug() << "Don't find browse file. Add a directory with a tree.";
+        sBar->showMessage("Don't find browse file. Add a directory with a tree.", 10000);
         return;
     }
 

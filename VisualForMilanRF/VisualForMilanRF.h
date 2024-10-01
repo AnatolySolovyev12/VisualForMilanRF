@@ -64,4 +64,5 @@ private:
     QAxObject* paste = nullptr;
     QTableWidgetItem* item = nullptr;
     int countRow = 1;
+    QStatusBar* sBar;
 };
