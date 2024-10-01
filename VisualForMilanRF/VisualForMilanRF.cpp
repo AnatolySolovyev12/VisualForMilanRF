@@ -16,14 +16,9 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.pushButtonImport, &QPushButton::clicked, this, &VisualForMilanRF::importXml);
     connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::refresh);
     connect(ui.pushButtonBrowse, &QPushButton::clicked, this, &VisualForMilanRF::browse);
-    
-    middleColumn = 0;
-
     connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
-
-
     startingImportXml();
-    
+    middleColumn = 0;
 }
 
 VisualForMilanRF::~VisualForMilanRF()

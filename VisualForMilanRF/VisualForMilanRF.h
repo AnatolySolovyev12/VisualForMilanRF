@@ -38,14 +38,12 @@ public:
     void browse();
     void recursionXlsWriter(QTreeWidgetItem* some);
     void report();
-
     void startingImportXml();
 
 private slots:
     void setData();
     void closeEditor(QTreeWidgetItem* any);
     void otherItemWasChecked(QTreeWidgetItem* any);
-
 
 private:
     Ui::VisualForMilanRFClass ui;
