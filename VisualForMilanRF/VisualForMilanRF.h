@@ -36,17 +36,14 @@ public:
     bool connectDB();
     void recursionDbSqlReader(QTreeWidgetItem* some);
     void browse();
-
-
-
     void recursionXlsWriter(QTreeWidgetItem* some);
     void report();
+    void startingImportXml();
 
 private slots:
     void setData();
     void closeEditor(QTreeWidgetItem* any);
     void otherItemWasChecked(QTreeWidgetItem* any);
-
 
 private:
     Ui::VisualForMilanRFClass ui;
@@ -67,4 +64,5 @@ private:
     QAxObject* paste = nullptr;
     QTableWidgetItem* item = nullptr;
     int countRow = 1;
+    QStatusBar* sBar;
 };
