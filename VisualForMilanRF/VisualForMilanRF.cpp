@@ -21,7 +21,7 @@ VisualForMilanRF::VisualForMilanRF(QWidget* parent)
 	middleColumn = 0;
 
 	sBar = new QStatusBar();
-	// QMainWindow::setStatusBar(sBar);
+	QMainWindow::setStatusBar(sBar);
 }
 
 VisualForMilanRF::~VisualForMilanRF()
