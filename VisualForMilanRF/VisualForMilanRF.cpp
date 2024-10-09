@@ -17,11 +17,11 @@ VisualForMilanRF::VisualForMilanRF(QWidget *parent)
     connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::refresh);
     connect(ui.pushButtonBrowse, &QPushButton::clicked, this, &VisualForMilanRF::browse);
     connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
-    startingImportXml();
     middleColumn = 0;
-
     sBar = new QStatusBar();
     QMainWindow::setStatusBar(sBar);
+
+    startingImportXml();
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -550,6 +550,11 @@ bool VisualForMilanRF::connectDB()
 
 void VisualForMilanRF::browse()
 {
+    QString addFileDonor = QFileDialog::getOpenFileName(0, "Choose directory with a database", "", "");
+
+    if (addFileDonor == "")
+        return;
+
     QFile file("browse.txt");
 
     if (!(file.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
@@ -561,12 +566,7 @@ void VisualForMilanRF::browse()
 
     QTextStream in(&file);
 
-    QString addFileDonor = QFileDialog::getOpenFileName(0, "Choose directory with a database", "", "");
-
     in << addFileDonor << Qt::endl;
-
-    if (addFileDonor == "")
-        file.remove();
 
     file.close();
 }
@@ -647,8 +647,6 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 
 void VisualForMilanRF::startingImportXml()
 {
-    /* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
-
     QFile file("tree.txt");
 
     if (!file.open(QIODevice::ReadOnly))
