@@ -17,6 +17,8 @@
 
 #include <QTableWidgetItem>
 
+#include "RangeTableValue.h"
+
 class VisualForMilanRF : public QMainWindow
 {
     Q_OBJECT
@@ -39,6 +41,12 @@ public:
     void recursionXlsWriter(QTreeWidgetItem* some);
     void report();
     void startingImportXml();
+
+
+
+    void showRangeTable();
+
+
 
 private slots:
     void setData();
@@ -65,4 +73,6 @@ private:
     QTableWidgetItem* item = nullptr;
     int countRow = 1;
     QStatusBar* sBar;
+
+    RangeTableValue* myRange = nullptr;
 };

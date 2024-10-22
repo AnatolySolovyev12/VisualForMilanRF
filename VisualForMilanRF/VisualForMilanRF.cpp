@@ -22,6 +22,9 @@ VisualForMilanRF::VisualForMilanRF(QWidget* parent)
     QMainWindow::setStatusBar(sBar);
 
     startingImportXml();
+
+
+	connect(ui.pushButtonRange, &QPushButton::clicked, this, &VisualForMilanRF::showRangeTable);
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -695,4 +698,14 @@ void VisualForMilanRF::startingImportXml()
 	loopXmlReader(any, xmlReader);
 
 	xmlFile.close();
+}
+
+void VisualForMilanRF::showRangeTable()
+{
+	QTreeWidgetItem* taked = ui.treeWidget->currentItem();
+
+
+	connectDB();
+	myRange = new RangeTableValue(this, taked->text(2));
+	mw_db.removeDatabase(mw_db.connectionName());
 }

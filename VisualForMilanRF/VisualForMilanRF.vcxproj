@@ -20,7 +20,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -93,10 +93,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="VisualForMilanRF.qrc" />
+    <QtUic Include="RangeTableValue.ui" />
     <QtUic Include="VisualForMilanRF.ui" />
     <QtMoc Include="VisualForMilanRF.h" />
+    <ClCompile Include="RangeTableValue.cpp" />
     <ClCompile Include="VisualForMilanRF.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="RangeTableValue.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VisualForMilanRF.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
