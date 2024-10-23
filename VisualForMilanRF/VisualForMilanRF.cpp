@@ -704,8 +704,8 @@ void VisualForMilanRF::showRangeTable()
 {
 	QTreeWidgetItem* taked = ui.treeWidget->currentItem();
 
-
 	connectDB();
 	myRange = new RangeTableValue(this, taked->text(2));
+	//myRange->show();
 	mw_db.removeDatabase(mw_db.connectionName());
 }

@@ -41,12 +41,7 @@ public:
     void recursionXlsWriter(QTreeWidgetItem* some);
     void report();
     void startingImportXml();
-
-
-
     void showRangeTable();
-
-
 
 private slots:
     void setData();

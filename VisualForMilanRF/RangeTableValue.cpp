@@ -20,7 +20,9 @@ RangeTableValue::RangeTableValue(QWidget *parent, QString numberAny)
    // model.setHeaderData(1, Qt::Horizontal, "Salary"); // даём название второму столбцу
 
     view.setModel(&model);
+   // ui.widgetForTable->addWidget(view);
     view.show();
+
 }
 
 RangeTableValue::~RangeTableValue()
