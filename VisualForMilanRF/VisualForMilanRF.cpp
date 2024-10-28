@@ -706,6 +706,6 @@ void VisualForMilanRF::showRangeTable()
 
 	connectDB();
 	myRange = new RangeTableValue(this, taked->text(2));
-	//myRange->show();
+	myRange->show();
 	mw_db.removeDatabase(mw_db.connectionName());
 }

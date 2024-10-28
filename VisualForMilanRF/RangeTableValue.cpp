@@ -7,7 +7,7 @@ RangeTableValue::RangeTableValue(QWidget *parent, QString numberAny)
 
     this->number = numberAny;
 
-    QString filterStr = "number = '" + number + "'"; // фильтр начинается с "where" SQL синтаксиса без самого слова "where"
+    QString filterStr = "number = '" + number + "'" + " ORDER BY date DESC"; // фильтр начинается с "where" SQL синтаксиса без самого слова "where"
 
     //+ "' and date > '05 - 10 - 2024'"
 
@@ -19,10 +19,7 @@ RangeTableValue::RangeTableValue(QWidget *parent, QString numberAny)
     //model.setHeaderData(0, Qt::Horizontal, "Name"); // даём название первому столбцу
    // model.setHeaderData(1, Qt::Horizontal, "Salary"); // даём название второму столбцу
 
-    view.setModel(&model);
-   // ui.widgetForTable->addWidget(view);
-    view.show();
-
+    ui.tableView->setModel(&model);
 }
 
 RangeTableValue::~RangeTableValue()

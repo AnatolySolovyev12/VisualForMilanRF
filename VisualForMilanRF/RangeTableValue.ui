@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>812</width>
-    <height>548</height>
+    <width>734</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -19,13 +19,24 @@
   <property name="windowTitle">
    <string>RangeTableValue</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTableView" name="tableView">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>681</width>
+      <height>451</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>812</width>
+     <width>734</width>
      <height>21</height>
     </rect>
    </property>
