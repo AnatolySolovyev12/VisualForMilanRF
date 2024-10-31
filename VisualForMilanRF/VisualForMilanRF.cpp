@@ -17,14 +17,13 @@ VisualForMilanRF::VisualForMilanRF(QWidget* parent)
     connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::refresh);
     connect(ui.pushButtonBrowse, &QPushButton::clicked, this, &VisualForMilanRF::browse);
     connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
+	connect(ui.pushButtonRange, &QPushButton::clicked, this, &VisualForMilanRF::showRangeTable);
+
     middleColumn = 0;
     sBar = new QStatusBar();
     QMainWindow::setStatusBar(sBar);
 
     startingImportXml();
-
-
-	connect(ui.pushButtonRange, &QPushButton::clicked, this, &VisualForMilanRF::showRangeTable);
 }
 
 VisualForMilanRF::~VisualForMilanRF()
