@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1075</width>
+    <width>1158</width>
     <height>493</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>40</x>
       <y>10</y>
-      <width>1011</width>
+      <width>1101</width>
       <height>421</height>
      </rect>
     </property>
@@ -68,7 +68,12 @@
     </column>
     <column>
      <property name="text">
-      <string>StartingValue</string>
+      <string>StartingValueCold</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>StartingValueHot</string>
      </property>
     </column>
     <item>
@@ -322,7 +327,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1075</width>
+     <width>1158</width>
      <height>21</height>
     </rect>
    </property>

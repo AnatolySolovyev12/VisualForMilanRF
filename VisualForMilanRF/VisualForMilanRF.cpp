@@ -67,7 +67,7 @@ void VisualForMilanRF::setData() // в случае двойного клика в €чейку открываем р
 	QTreeWidgetItem* any = ui.treeWidget->currentItem(); // присваиваем указателю выбранную €чейку
 	int column = ui.treeWidget->currentColumn(); // присваиваем переменной номер текущего столбца (отсчЄт начинаетс€ с 0-ого)
 
-	if (column == 3 || column == 4 || column == 5 || column == 6) return; // не даЄм редактировать дальше третьего столбца            ////////////////////
+	if (column == 3 || column == 4 || column == 5 || column == 6 || column == 7) return; // не даЄм редактировать дальше третьего столбца            
 
    // qDebug() << "OPEN EDITOR";
 
@@ -101,7 +101,8 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрыти€ редакт
 		any->setBackground(7, QColor(213, 176, 176, 255));
 		any->setCheckState(7, any->checkState(7));
 
-		any->setBackground(8, QColor(221, 221, 221, 255));   /////////////////////////////
+		any->setBackground(8, QColor(221, 221, 221, 255));   
+		any->setBackground(9, QColor(221, 221, 221, 255));   
 
 		offChanger = false;
 	}
@@ -128,14 +129,15 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрыти€ редакт
 		any->setData(7, Qt::CheckStateRole, QVariant());
 		any->setText(7, "");
 
-		any->setBackground(7, QColor("white"));   /////////////////////////////
+		any->setBackground(7, QColor("white"));   
 		any->setText(8, "");
+
+		any->setBackground(7, QColor("white"));   
+		any->setText(9, "");
 
 		offChanger = false;
 	}
 	ui.treeWidget->closePersistentEditor(middleItem, middleColumn); // закрываем редактор
-
-   // qDebug() << "CLOSE EDITOR";
 }
 
 void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем открытый редактор в случае переключени€ на другой элемент
@@ -158,14 +160,13 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем от
 		any->setBackground(5, QColor(156, 203, 213, 255));
 		any->setBackground(6, QColor(213, 176, 176, 255));
 		any->setBackground(7, QColor(213, 176, 176, 255));
-		any->setBackground(8, QColor(221, 221, 221, 255)); /////////////////////////////
+		any->setBackground(8, QColor(221, 221, 221, 255)); 
+		any->setBackground(9, QColor(221, 221, 221, 255)); 
 		offChanger = false;
 	}
 
 	ui.treeWidget->closePersistentEditor(middleItem, middleColumn);
 	middleItem = nullptr;
-
-	// qDebug() << "CLOSE EDITOR";
 }
 
 void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих значений с последующей записью в массив. ѕотом выводим полный адрес в первом столбце до найденного сопадени€.
@@ -261,7 +262,8 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 			}
 		}
 
-		someXmlWriter.writeAttribute("StartingValue", some->text(8));
+		someXmlWriter.writeAttribute("StartingValueCold", some->text(8));
+		someXmlWriter.writeAttribute("StartingValueHot", some->text(9));
 
 		int count = some->childCount();
 
@@ -298,7 +300,8 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 			}
 		}
 
-		someXmlWriter.writeAttribute("StartingValue", some->text(8));
+		someXmlWriter.writeAttribute("StartingValueCold", some->text(8));
+		someXmlWriter.writeAttribute("StartingValueHot", some->text(9));
 
 		someXmlWriter.writeEndElement();
 
@@ -416,7 +419,8 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xm
 						some->setCheckState(7, Qt::Unchecked);
 				}
 
-				if (val.name().toString() == "StartingValue") some->setText(8, val.value().toString());
+				if (val.name().toString() == "StartingValueCold") some->setText(8, val.value().toString());
+				if (val.name().toString() == "StartingValueHot") some->setText(9, val.value().toString());
 			}
 
 			offChanger = false;
@@ -451,7 +455,8 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 {
 	QSqlQuery query;
 	QString queryString;
-
+	bool ok;
+	double middleValue;
 	QDate curDate = QDate::currentDate();
 
 	if (some->childCount())
@@ -467,7 +472,31 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 			for (int count = 3; count <= 7; count++)
 			{
 				queryString = query.value(count - 3).toString(); // ID с показани€ми на единицу меньше чем мы вы€вили по номеру счЄтчика.
-				some->setText((count), queryString);
+
+				if (count == 3)
+				{
+					some->setText((count), queryString);
+				}
+				else
+				{
+					if (count == 4 || count == 5)
+					{
+						 middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
+					}
+					else
+					{
+						 middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
+					}
+
+					if (some->checkState(count) == Qt::Checked)
+					{
+						some->setText((count), queryString.setNum(middleValue));   
+					}
+					else
+					{
+						some->setText((count), queryString);
+					}
+				}
 
 				if (count == 3 && queryString == (curDate.toString("dd-MM-yyyy")))
 				{
@@ -507,7 +536,31 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 			{
 
 				queryString = query.value(count - 3).toString(); // ID с показани€ми на единицу меньше чем мы вы€вили по номеру счЄтчика.
-				some->setText((count), queryString);
+
+				if (count == 3)
+				{
+					some->setText((count), queryString);
+				}
+				else
+				{
+					if (count == 4 || count == 5)
+					{
+						middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
+					}
+					else
+					{
+						middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
+					}
+
+					if (some->checkState(count) == Qt::Checked)
+					{
+						some->setText((count), queryString.setNum(middleValue));   
+					}
+					else
+					{
+						some->setText((count), queryString);
+					}
+				}
 
 				if (count == 3 && queryString == (curDate.toString("dd-MM-yyyy")))
 				{

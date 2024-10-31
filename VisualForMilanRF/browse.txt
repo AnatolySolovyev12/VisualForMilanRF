@@ -1,1 +1,1 @@
-C:/Users/PavlovAA/Desktop/DataBaseMilanRF
+//energosfera-ges/Release/DataBaseMilanRF
