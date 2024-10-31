@@ -232,9 +232,11 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 {
 	if (some->childCount())
 	{
-		someXmlWriter.writeStartElement(some->text(0)); // отркывает начальный элемент "лестницы" xml
+		someXmlWriter.writeStartElement("Point"); // отркывает начальный элемент "лестницы" xml
 
-		someXmlWriter.writeAttribute("ID", some->text(1)); // присваиваем атрибуты внутри открытого первого элемента
+		someXmlWriter.writeAttribute("Adress", some->text(0)); // присваиваем атрибуты внутри открытого первого элемента  
+
+		someXmlWriter.writeAttribute("ID", some->text(1));
 
 		someXmlWriter.writeAttribute("Number", some->text(2));
 
@@ -265,9 +267,11 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 	}
 	else
 	{
-		someXmlWriter.writeStartElement(some->text(0)); // отркывает начальный элемент "лестницы" xml
+		someXmlWriter.writeStartElement("Point"); // отркывает начальный элемент "лестницы" xml  
 
-		someXmlWriter.writeAttribute("ID", some->text(1)); // присваиваем атрибуты внутри открытого первого элемента
+		someXmlWriter.writeAttribute("Adress", some->text(0)); // присваиваем атрибуты внутри открытого первого элемента   
+
+		someXmlWriter.writeAttribute("ID", some->text(1)); //
 
 		someXmlWriter.writeAttribute("Number", some->text(2));
 
@@ -365,6 +369,8 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xm
 
 			for (QXmlStreamAttribute& val : xmlReader.attributes())
 			{
+				if (val.name().toString() == "Adress") some->setText(0, val.value().toString());
+
 				if (val.name().toString() == "ID") some->setText(1, val.value().toString());
 
 				if (val.name().toString() == "Number") some->setText(2, val.value().toString());
