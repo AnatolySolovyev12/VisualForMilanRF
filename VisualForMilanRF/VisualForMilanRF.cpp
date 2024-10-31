@@ -67,7 +67,7 @@ void VisualForMilanRF::setData() // в случае двойного клика в €чейку открываем р
 	QTreeWidgetItem* any = ui.treeWidget->currentItem(); // присваиваем указателю выбранную €чейку
 	int column = ui.treeWidget->currentColumn(); // присваиваем переменной номер текущего столбца (отсчЄт начинаетс€ с 0-ого)
 
-	if (column > 2) return; // не даЄм редактировать дальше третьего столбца
+	if (column == 3 || column == 4 || column == 5 || column == 6) return; // не даЄм редактировать дальше третьего столбца            ////////////////////
 
    // qDebug() << "OPEN EDITOR";
 
@@ -89,17 +89,19 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрыти€ редакт
 	{
 		offChanger = true;
 
-		any->setBackground(4, QColor(213, 176, 176, 255));
+		any->setBackground(4, QColor(156, 203, 213, 255));
 		any->setCheckState(4, any->checkState(4));
 
-		any->setBackground(5, QColor(213, 176, 176, 255));
+		any->setBackground(5, QColor(156, 203, 213, 255));
 		any->setCheckState(5, any->checkState(5));
 
-		any->setBackground(6, QColor(156, 203, 213, 255));
+		any->setBackground(6, QColor(213, 176, 176, 255));
 		any->setCheckState(6, any->checkState(6));
 
-		any->setBackground(7, QColor(156, 203, 213, 255));
+		any->setBackground(7, QColor(213, 176, 176, 255));
 		any->setCheckState(7, any->checkState(7));
+
+		any->setBackground(8, QColor(221, 221, 221, 255));   /////////////////////////////
 
 		offChanger = false;
 	}
@@ -126,6 +128,9 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрыти€ редакт
 		any->setData(7, Qt::CheckStateRole, QVariant());
 		any->setText(7, "");
 
+		any->setBackground(7, QColor("white"));   /////////////////////////////
+		any->setText(8, "");
+
 		offChanger = false;
 	}
 	ui.treeWidget->closePersistentEditor(middleItem, middleColumn); // закрываем редактор
@@ -149,10 +154,11 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем от
 	if (any->text(2) != "")
 	{
 		offChanger = true;
-		any->setBackground(4, QColor(213, 176, 176, 255));
-		any->setBackground(5, QColor(213, 176, 176, 255));
-		any->setBackground(6, QColor(156, 203, 213, 255));
-		any->setBackground(7, QColor(156, 203, 213, 255));
+		any->setBackground(4, QColor(156, 203, 213, 255));
+		any->setBackground(5, QColor(156, 203, 213, 255));
+		any->setBackground(6, QColor(213, 176, 176, 255));
+		any->setBackground(7, QColor(213, 176, 176, 255));
+		any->setBackground(8, QColor(221, 221, 221, 255)); /////////////////////////////
 		offChanger = false;
 	}
 
@@ -255,6 +261,8 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 			}
 		}
 
+		someXmlWriter.writeAttribute("StartingValue", some->text(8));
+
 		int count = some->childCount();
 
 		for (int x = 0; x < count; x++)
@@ -289,6 +297,8 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 					someXmlWriter.writeAttribute(temporary, "1");
 			}
 		}
+
+		someXmlWriter.writeAttribute("StartingValue", some->text(8));
 
 		someXmlWriter.writeEndElement();
 
@@ -405,6 +415,8 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xm
 					else
 						some->setCheckState(7, Qt::Unchecked);
 				}
+
+				if (val.name().toString() == "StartingValue") some->setText(8, val.value().toString());
 			}
 
 			offChanger = false;
