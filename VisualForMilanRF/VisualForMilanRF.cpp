@@ -463,7 +463,7 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 	{
 		if (some->text(2) != nullptr)
 		{
-			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date";   /////////////////desc
+			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date";
 
 			query.exec(queryString); // Отправляем запрос на количество записей
 
@@ -526,7 +526,7 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 	{
 		if (some->text(2) != nullptr)
 		{
-			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date"; // запрашиваем нужный нам ID поо номеру прибора ////////////desc
+			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date"; // запрашиваем нужный нам ID поо номеру прибора
 
 			query.exec(queryString); // Отправляем запрос на количество записей
 
