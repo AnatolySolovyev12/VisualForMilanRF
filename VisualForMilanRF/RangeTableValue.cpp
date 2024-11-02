@@ -7,7 +7,7 @@ RangeTableValue::RangeTableValue(QWidget *parent, QString numberAny)
 
     this->number = numberAny;
 
-    QString filterStr = "number = '" + number + "'" + " ORDER BY date"; // фильтр начинается с "where" SQL синтаксиса без самого слова "where"
+    QString filterStr = "number = '" + number + "'" + " ORDER BY date desc"; // фильтр начинается с "where" SQL синтаксиса без самого слова "where"
 
     //+ "' and date > '05 - 10 - 2024'"
 

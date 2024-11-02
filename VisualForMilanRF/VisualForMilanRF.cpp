@@ -463,7 +463,7 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 	{
 		if (some->text(2) != nullptr)
 		{
-			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date";
+			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date desc";
 
 			query.exec(queryString); // Отправляем запрос на количество записей
 
@@ -498,12 +498,12 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 					}
 				}
 
-				if (count == 3 && queryString == (curDate.toString("dd-MM-yyyy")))
+				if (count == 3 && queryString == (curDate.toString("yyyy-MM-dd")))
 				{
 					some->setBackground(3, QColor(125, 255, 116, 255));
 					continue;
 				}
-				if (count == 3 && queryString == (curDate.addDays(-1).toString("dd-MM-yyyy")))
+				if (count == 3 && queryString == (curDate.addDays(-1).toString("yyyy-MM-dd")))
 				{
 					some->setBackground(3, QColor(255, 250, 119, 255));
 					continue;
@@ -526,7 +526,7 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 	{
 		if (some->text(2) != nullptr)
 		{
-			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date"; // запрашиваем нужный нам ID поо номеру прибора
+			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date desc"; // запрашиваем нужный нам ID поо номеру прибора
 
 			query.exec(queryString); // Отправляем запрос на количество записей
 
@@ -562,12 +562,12 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 					}
 				}
 
-				if (count == 3 && queryString == (curDate.toString("dd-MM-yyyy")))
+				if (count == 3 && queryString == (curDate.toString("yyyy-MM-dd")))
 				{
 					some->setBackground(3, QColor(125, 255, 116, 255));
 					continue;
 				}
-				if (count == 3 && queryString == (curDate.addDays(-1).toString("dd-MM-yyyy")))
+				if (count == 3 && queryString == (curDate.addDays(-1).toString("yyyy-MM-dd")))
 				{
 					some->setBackground(3, QColor(255, 250, 119, 255));
 					continue;
