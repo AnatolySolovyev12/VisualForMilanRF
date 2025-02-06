@@ -8,22 +8,22 @@ VisualForMilanRF::VisualForMilanRF(QWidget* parent)
 	connect(ui.pushButtonAdd, &QPushButton::clicked, this, &VisualForMilanRF::addItemInList);
 	connect(ui.pushButtonAddMinus, &QPushButton::clicked, this, &VisualForMilanRF::deleteItemInList);
 
-    connect(ui.treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(setData()));
-    connect(ui.treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(closeEditor(QTreeWidgetItem*)));
-    connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(otherItemWasChecked(QTreeWidgetItem*)));
-    connect(ui.pushButtonFinder, &QPushButton::clicked, this, &VisualForMilanRF::adressFinder);
-    connect(ui.pushButtonExport, &QPushButton::clicked, this, &VisualForMilanRF::exportXml);
-    connect(ui.pushButtonImport, &QPushButton::clicked, this, &VisualForMilanRF::importXml);
-    connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::refresh);
-    connect(ui.pushButtonBrowse, &QPushButton::clicked, this, &VisualForMilanRF::browse);
-    connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
+	connect(ui.treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(setData()));
+	connect(ui.treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(closeEditor(QTreeWidgetItem*)));
+	connect(ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(otherItemWasChecked(QTreeWidgetItem*)));
+	connect(ui.pushButtonFinder, &QPushButton::clicked, this, &VisualForMilanRF::adressFinder);
+	connect(ui.pushButtonExport, &QPushButton::clicked, this, &VisualForMilanRF::exportXml);
+	connect(ui.pushButtonImport, &QPushButton::clicked, this, &VisualForMilanRF::importXml);
+	connect(ui.pushButtonTest, &QPushButton::clicked, this, &VisualForMilanRF::refresh);
+	connect(ui.pushButtonBrowse, &QPushButton::clicked, this, &VisualForMilanRF::browse);
+	connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
 	connect(ui.pushButtonRange, &QPushButton::clicked, this, &VisualForMilanRF::showRangeTable);
 
-    middleColumn = 0;
-    sBar = new QStatusBar();
-    QMainWindow::setStatusBar(sBar);
+	middleColumn = 0;
+	sBar = new QStatusBar();
+	QMainWindow::setStatusBar(sBar);
 
-    startingImportXml();
+	startingImportXml();
 }
 
 VisualForMilanRF::~VisualForMilanRF()
@@ -101,8 +101,8 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрытия редакт
 		any->setBackground(7, QColor(213, 176, 176, 255));
 		any->setCheckState(7, any->checkState(7));
 
-		any->setBackground(8, QColor(221, 221, 221, 255));   
-		any->setBackground(9, QColor(221, 221, 221, 255));   
+		any->setBackground(8, QColor(221, 221, 221, 255));
+		any->setBackground(9, QColor(221, 221, 221, 255));
 
 		offChanger = false;
 	}
@@ -129,10 +129,10 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрытия редакт
 		any->setData(7, Qt::CheckStateRole, QVariant());
 		any->setText(7, "");
 
-		any->setBackground(7, QColor("white"));   
+		any->setBackground(7, QColor("white"));
 		any->setText(8, "");
 
-		any->setBackground(7, QColor("white"));   
+		any->setBackground(7, QColor("white"));
 		any->setText(9, "");
 
 		offChanger = false;
@@ -160,8 +160,8 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем от
 		any->setBackground(5, QColor(156, 203, 213, 255));
 		any->setBackground(6, QColor(213, 176, 176, 255));
 		any->setBackground(7, QColor(213, 176, 176, 255));
-		any->setBackground(8, QColor(221, 221, 221, 255)); 
-		any->setBackground(9, QColor(221, 221, 221, 255)); 
+		any->setBackground(8, QColor(221, 221, 221, 255));
+		any->setBackground(9, QColor(221, 221, 221, 255));
 		offChanger = false;
 	}
 
@@ -463,7 +463,11 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 	{
 		if (some->text(2) != nullptr)
 		{
-			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date desc";
+			if (some->text(2).length() > 5)
+				queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date desc";
+			else
+				queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from counterTable where number = " + some->text(2) + " order by date desc";
+
 
 			query.exec(queryString); // Отправляем запрос на количество записей
 
@@ -481,16 +485,16 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 				{
 					if (count == 4 || count == 5)
 					{
-						 middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
+						middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
 					}
 					else
 					{
-						 middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
+						middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
 					}
 
 					if (some->checkState(count) == Qt::Checked)
 					{
-						some->setText((count), queryString.setNum(middleValue));   
+						some->setText((count), queryString.setNum(middleValue));
 					}
 					else
 					{
@@ -526,7 +530,10 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 	{
 		if (some->text(2) != nullptr)
 		{
-			queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date desc"; // запрашиваем нужный нам ID поо номеру прибора
+			if (some->text(2).length() > 5)
+				queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date desc";
+			else
+				queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from counterTable where number = " + some->text(2) + " order by date desc";
 
 			query.exec(queryString); // Отправляем запрос на количество записей
 
@@ -554,7 +561,7 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 
 					if (some->checkState(count) == Qt::Checked)
 					{
-						some->setText((count), queryString.setNum(middleValue));   
+						some->setText((count), queryString.setNum(middleValue));
 					}
 					else
 					{
@@ -627,12 +634,12 @@ bool VisualForMilanRF::connectDB()
 
 void VisualForMilanRF::browse()
 {
-    QString addFileDonor = QFileDialog::getOpenFileName(0, "Choose directory with a database", "", "");
+	QString addFileDonor = QFileDialog::getOpenFileName(0, "Choose directory with a database", "", "");
 
-    if (addFileDonor == "")
-        return;
+	if (addFileDonor == "")
+		return;
 
-    QFile file("browse.txt");
+	QFile file("browse.txt");
 
 	if (!(file.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
 	{
@@ -643,9 +650,9 @@ void VisualForMilanRF::browse()
 
 	QTextStream in(&file);
 
-    in << addFileDonor << Qt::endl;
+	in << addFileDonor << Qt::endl;
 
-    file.close();
+	file.close();
 }
 
 void VisualForMilanRF::report()
@@ -690,7 +697,7 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 
 				cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой ячейкой работать
 
-				if ((some->checkState(column) == Qt::Unchecked) && (column > 3)) continue;
+				if ((some->checkState(column) == Qt::Unchecked) && (column > 3) && (some->text(2).length() >5)) continue;
 
 				cell->dynamicCall("SetValue(QString)", some->text(column));
 			}
@@ -712,7 +719,7 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 
 				cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой ячейкой работать
 
-				if ((some->checkState(column) == Qt::Unchecked) && (column > 3)) continue;
+				if ((some->checkState(column) == Qt::Unchecked) && (column > 3) && (some->text(2).length() > 5)) continue;
 
 				cell->dynamicCall("SetValue(QString)", some->text(column));
 			}
@@ -724,9 +731,9 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 
 void VisualForMilanRF::startingImportXml()
 {
-    /* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
+	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
 
-    QFile file("tree.txt");
+	QFile file("tree.txt");
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
