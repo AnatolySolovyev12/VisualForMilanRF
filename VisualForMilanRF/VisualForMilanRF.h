@@ -2,21 +2,14 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_VisualForMilanRF.h"
-
 #include <QInputDialog>
 #include <QFileDialog>
-
 #include <QFile>
-
 #include <QXmlStreamWriter>
 #include <QXmlStreamAttribute>
-
 #include <QtSql/QtSql>
-
 #include <QAxObject>
-
 #include <QTableWidgetItem>
-
 #include "RangeTableValue.h"
 
 class VisualForMilanRF : public QMainWindow
@@ -42,6 +35,7 @@ public:
     void report();
     void startingImportXml();
     void showRangeTable();
+    void sortTable();
 
 private slots:
     void setData();
@@ -57,7 +51,6 @@ private:
     QString line;
     QSqlDatabase mw_db; // экземпляр подключения к БД
 
-
     QAxObject* excelDonor = nullptr;
     QAxObject* workbooksDonor = nullptr;
     QAxObject* workbookDonor = nullptr;
@@ -70,4 +63,6 @@ private:
     QStatusBar* sBar;
 
     RangeTableValue* myRange = nullptr;
+
+    bool sortBool = true;
 };

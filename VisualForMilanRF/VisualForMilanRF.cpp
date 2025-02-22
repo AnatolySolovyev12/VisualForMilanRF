@@ -18,6 +18,7 @@ VisualForMilanRF::VisualForMilanRF(QWidget* parent)
 	connect(ui.pushButtonBrowse, &QPushButton::clicked, this, &VisualForMilanRF::browse);
 	connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
 	connect(ui.pushButtonRange, &QPushButton::clicked, this, &VisualForMilanRF::showRangeTable);
+	connect(ui.pushButtonSort, &QPushButton::clicked, this, &VisualForMilanRF::sortTable);
 
 	middleColumn = 0;
 	sBar = new QStatusBar();
@@ -28,6 +29,7 @@ VisualForMilanRF::VisualForMilanRF(QWidget* parent)
 
 VisualForMilanRF::~VisualForMilanRF()
 {}
+
 
 void VisualForMilanRF::addItemInList()
 {
@@ -51,6 +53,7 @@ void VisualForMilanRF::addItemInList()
 	offChanger = false;
 }
 
+
 void VisualForMilanRF::deleteItemInList()
 {
 	QTreeWidgetItem* taked = ui.treeWidget->currentItem();
@@ -61,6 +64,7 @@ void VisualForMilanRF::deleteItemInList()
 
 	parentTaked->takeChild(parentTaked->indexOfChild(taked));
 }
+
 
 void VisualForMilanRF::setData() // в случае двойного клика в ячейку открываем редактор
 {
@@ -77,6 +81,7 @@ void VisualForMilanRF::setData() // в случае двойного клика в ячейку открываем р
 	ui.treeWidget->openPersistentEditor(any, column); // разрешаем редактирование ячейки
 	ui.treeWidget->editItem(any, column); // открываем редактор
 }
+
 
 void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрытия редактора в случае внесения изменений (после нажатия Enter)
 {
@@ -140,6 +145,7 @@ void VisualForMilanRF::closeEditor(QTreeWidgetItem* any) // слот закрытия редакт
 	ui.treeWidget->closePersistentEditor(middleItem, middleColumn); // закрываем редактор
 }
 
+
 void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем открытый редактор в случае переключения на другой элемент
 {
 	if (offChanger) return;
@@ -168,6 +174,7 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрываем от
 	ui.treeWidget->closePersistentEditor(middleItem, middleColumn);
 	middleItem = nullptr;
 }
+
 
 void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих значений с последующей записью в массив. Потом выводим полный адрес в первом столбце до найденного сопадения.
 {
@@ -211,6 +218,7 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столбце совпадающих зна
 	}
 }
 
+
 void VisualForMilanRF::exportXml()
 {
 	QString savedFile = QFileDialog::getSaveFileName(0, "Save XML", "", "*.xml");
@@ -233,6 +241,7 @@ void VisualForMilanRF::exportXml()
 
 	file.close();
 }
+
 
 void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWriter& someXmlWriter)
 {
@@ -309,6 +318,7 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 	}
 }
 
+
 void VisualForMilanRF::importXml()
 {
 	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
@@ -349,6 +359,7 @@ void VisualForMilanRF::importXml()
 
 	txtFile.close();
 }
+
 
 void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xmlReader)
 {
@@ -436,9 +447,6 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xm
 }
 
 
-
-
-
 void VisualForMilanRF::refresh()
 {
 	if (connectDB())
@@ -450,6 +458,7 @@ void VisualForMilanRF::refresh()
 		mw_db.removeDatabase(mw_db.connectionName());
 	}
 }
+
 
 void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 {
@@ -587,6 +596,7 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 	}
 }
 
+
 bool VisualForMilanRF::connectDB()
 {
 	// почему то добавление имени подключения не даёт делать запросы.
@@ -594,7 +604,6 @@ bool VisualForMilanRF::connectDB()
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		// qDebug() << "Don't find browse file. Add a directory with a database.";
 		sBar->showMessage("Don't find browse file. Add a directory with a database.", 10000);
 		return true;
 	}
@@ -604,33 +613,24 @@ bool VisualForMilanRF::connectDB()
 	line = out.readLine(); // метод readLine() считывает одну строку из потока
 
 	mw_db = QSqlDatabase::addDatabase("QSQLITE"); // указываем какой использовать драйвер для подключения к БД и имя подключения. Если имя не задано то по умолчанию подключаемся к этой базе. Вроде так.
-	//mw_db.setDatabaseName("//ENERGOSFERA-GES//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
 
-   // mw_db.setDatabaseName("C://Users//admin//source//repos//PortListening//x64//Release//DataBaseMilanRF");
 	mw_db.setDatabaseName(line);
-	// mw_db.setHostName("\\ENERGOSFERA-GES\Release");
-	//mw_db.setPort(8080);
-	//mw_db.setDatabaseName("//10.86.142.14//Release//DataBaseMilanRF"); // Указываем с какой БД взаимодействовать. Если такого имени не найдёт то файл БД с указанным именем будет создан.
-	// mw_db.setUserName("Администратор");
-	// mw_db.setPassword("RootToor#");
 
 	mw_db.setConnectOptions("QSQLITE_OPEN_READONLY");
 
 	if (!mw_db.open())
 	{
-		// qDebug() << "Cannot open database: " << mw_db.lastError();
 		QString errorStr = "Cannot open database: " + mw_db.lastError().text();
 		sBar->showMessage(errorStr, 10000);
 		return false;
 	}
 	else
 	{
-		//  qDebug() << "DataBase was OPEN";
 		sBar->showMessage("DataBase was OPEN", 10000);
 	}
-
 	file.close();
 }
+
 
 void VisualForMilanRF::browse()
 {
@@ -643,7 +643,6 @@ void VisualForMilanRF::browse()
 
 	if (!(file.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
 	{
-		//qDebug() << "Don't find browse file. Add a directory with a database.";
 		sBar->showMessage("Don't find browse file. Add a directory with a database.", 10000);
 		return;
 	}
@@ -655,10 +654,9 @@ void VisualForMilanRF::browse()
 	file.close();
 }
 
+
 void VisualForMilanRF::report()
 {
-	// QString savedFile = QFileDialog::getOpenFileName(0, "Save Excel file", "", "*.xls *.xlsx");
-
 	QString savedFile = QFileDialog::getSaveFileName(0, "Save Excel file", "", "*.xls");
 	QFile file(savedFile);
 	file.open(QIODevice::WriteOnly);
@@ -686,6 +684,7 @@ void VisualForMilanRF::report()
 	excelDonor->dynamicCall("Quit()");
 	delete excelDonor;
 }
+
 
 void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 {
@@ -729,6 +728,7 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 	}
 }
 
+
 void VisualForMilanRF::startingImportXml()
 {
 	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
@@ -737,7 +737,6 @@ void VisualForMilanRF::startingImportXml()
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		//qDebug() << "Don't find browse file. Add a directory with a tree.";
 		sBar->showMessage("Don't find browse file. Add a directory with a tree.", 10000);
 		return;
 	}
@@ -748,7 +747,6 @@ void VisualForMilanRF::startingImportXml()
 
 	if (myLine == "")
 	{
-		//qDebug() << "Don't find browse file. Add a directory with a tree.";
 		sBar->showMessage("Don't find browse file. Add a directory with a tree.", 10000);
 		return;
 	}
@@ -763,7 +761,6 @@ void VisualForMilanRF::startingImportXml()
 	}
 	else
 	{
-		//qDebug() << "Don't find browse file. Add a directory with a tree.";
 		sBar->showMessage("Don't find browse file. Add a directory with a tree.", 10000);
 		return;
 	}
@@ -777,6 +774,7 @@ void VisualForMilanRF::startingImportXml()
 	xmlFile.close();
 }
 
+
 void VisualForMilanRF::showRangeTable()
 {
 	QTreeWidgetItem* taked = ui.treeWidget->currentItem();
@@ -785,4 +783,19 @@ void VisualForMilanRF::showRangeTable()
 	myRange = new RangeTableValue(this, taked->text(2));
 	myRange->show();
 	mw_db.removeDatabase(mw_db.connectionName());
+}
+
+
+void VisualForMilanRF::sortTable()
+{
+	if (sortBool)
+	{
+		ui.treeWidget->currentItem()->sortChildren(ui.treeWidget->currentColumn(), Qt::AscendingOrder);
+		sortBool = !sortBool;
+	}
+	else
+	{
+		ui.treeWidget->currentItem()->sortChildren(ui.treeWidget->currentColumn(), Qt::DescendingOrder);
+		sortBool = !sortBool;
+	}
 }
