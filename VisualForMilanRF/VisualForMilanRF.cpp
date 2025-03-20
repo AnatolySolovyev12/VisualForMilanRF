@@ -237,10 +237,13 @@ void VisualForMilanRF::exportXml()
 
 	QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
 
-	recursionXmlWriter(any, xmlWriter);
+	if (any)
+	{
+		recursionXmlWriter(any, xmlWriter);
 
-	xmlWriter.writeEndElement(); // General
-	xmlWriter.writeEndDocument();
+		xmlWriter.writeEndElement(); // General
+		xmlWriter.writeEndDocument();
+	}
 
 	file.close();
 }
