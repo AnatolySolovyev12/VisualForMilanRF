@@ -802,3 +802,11 @@ void VisualForMilanRF::sortTable()
 		sortBool = !sortBool;
 	}
 }
+
+
+void VisualForMilanRF::mousePressEvent(QMouseEvent* event) {
+	if (event->button() == Qt::LeftButton) {
+
+		ui.treeWidget->setCurrentItem(ui.treeWidget->invisibleRootItem());
+	}
+}

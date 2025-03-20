@@ -11,6 +11,7 @@
 #include <QAxObject>
 #include <QTableWidgetItem>
 #include "RangeTableValue.h"
+#include <QMouseEvent>
 
 class VisualForMilanRF : public QMainWindow
 {
@@ -36,6 +37,7 @@ public:
     void startingImportXml();
     void showRangeTable();
     void sortTable();
+    void mousePressEvent(QMouseEvent* event);
 
 private slots:
     void setData();
