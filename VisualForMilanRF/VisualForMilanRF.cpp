@@ -56,6 +56,7 @@ void VisualForMilanRF::addItemInList()
 
 void VisualForMilanRF::deleteItemInList()
 {
+	if (ui.treeWidget->currentItem() == nullptr) return;
 	QTreeWidgetItem* taked = ui.treeWidget->currentItem();
 	QTreeWidgetItem* parentTaked = taked->parent();
 
