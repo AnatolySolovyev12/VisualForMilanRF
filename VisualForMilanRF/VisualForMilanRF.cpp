@@ -235,15 +235,23 @@ void VisualForMilanRF::exportXml()
 	xmlWriter.setAutoFormattingIndent(2); // задаём количество пробелов в отступе (по умолчанию 4)
 	xmlWriter.writeStartDocument(); // пишет в шапке кодировку документа
 
-	QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
+	int countOfTopItems = ui.treeWidget->topLevelItemCount();
 
-	if (any)
+	xmlWriter.writeStartElement("Root");
+
+	if (countOfTopItems)
 	{
-		recursionXmlWriter(any, xmlWriter);
+		for (int val = 0; val < countOfTopItems; val++)
+		{
+			QTreeWidgetItem* any = ui.treeWidget->topLevelItem(val);
 
-		xmlWriter.writeEndElement(); // General
-		xmlWriter.writeEndDocument();
+			recursionXmlWriter(any, xmlWriter);
+		}
 	}
+
+	xmlWriter.writeEndElement();
+
+	xmlWriter.writeEndDocument();
 
 	file.close();
 }
@@ -341,9 +349,7 @@ void VisualForMilanRF::importXml()
 
 	file.open(QFile::ReadWrite);
 
-	QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
-
-	loopXmlReader(any, xmlReader);
+	loopXmlReader(xmlReader);
 
 	file.close();
 
@@ -367,19 +373,22 @@ void VisualForMilanRF::importXml()
 }
 
 
-void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xmlReader)
+void VisualForMilanRF::loopXmlReader(QXmlStreamReader& xmlReader)
 {
 	QList <QTreeWidgetItem*> myList;
 
-	myList.push_back(some);
+	QTreeWidgetItem* some = nullptr;;
+
+	ui.treeWidget->clear(); // очищаем дерево перед загрузкой новых данных
 
 	while (!xmlReader.atEnd())
 	{
-		xmlReader.readNextStartElement();
-
-		if (xmlReader.isStartElement())
+		if (xmlReader.readNextStartElement())
 		{
-			if (some == ui.treeWidget->topLevelItem(0))
+			if (xmlReader.name().toString() == "Root")
+				continue;
+
+			if (myList.length() == 0)
 			{
 				some = new QTreeWidgetItem(ui.treeWidget);
 			}
@@ -448,8 +457,6 @@ void VisualForMilanRF::loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xm
 		if (xmlReader.isEndElement())
 			myList.pop_back();
 	}
-
-	ui.treeWidget->takeTopLevelItem(0);
 }
 
 
@@ -773,9 +780,9 @@ void VisualForMilanRF::startingImportXml()
 
 	QXmlStreamReader xmlReader(&xmlFile);
 
-	QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
+	//QTreeWidgetItem* any = ui.treeWidget->topLevelItem(0);
 
-	loopXmlReader(any, xmlReader);
+	loopXmlReader(xmlReader);
 
 	xmlFile.close();
 }

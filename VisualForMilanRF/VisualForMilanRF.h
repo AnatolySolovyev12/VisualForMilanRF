@@ -27,7 +27,7 @@ public:
     void exportXml();
     void recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWriter& someXmlWriter);
     void importXml();
-    void loopXmlReader(QTreeWidgetItem* some, QXmlStreamReader& xmlReader);
+    void loopXmlReader(QXmlStreamReader& xmlReader);
     void refresh();
     bool connectDB();
     void recursionDbSqlReader(QTreeWidgetItem* some);
