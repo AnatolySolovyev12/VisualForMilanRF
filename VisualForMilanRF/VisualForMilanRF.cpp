@@ -803,12 +803,20 @@ void VisualForMilanRF::sortTable()
 {
 	if (sortBool)
 	{
-		ui.treeWidget->currentItem()->sortChildren(ui.treeWidget->currentColumn(), Qt::AscendingOrder);
+		if (ui.treeWidget->currentItem() == nullptr)
+			ui.treeWidget->sortItems(0, Qt::AscendingOrder);
+		else
+			ui.treeWidget->currentItem()->sortChildren(ui.treeWidget->currentColumn(), Qt::AscendingOrder);
+
 		sortBool = !sortBool;
 	}
 	else
 	{
-		ui.treeWidget->currentItem()->sortChildren(ui.treeWidget->currentColumn(), Qt::DescendingOrder);
+		if (ui.treeWidget->currentItem() == nullptr)
+			ui.treeWidget->sortItems(0, Qt::DescendingOrder);
+		else
+			ui.treeWidget->currentItem()->sortChildren(ui.treeWidget->currentColumn(), Qt::DescendingOrder);
+
 		sortBool = !sortBool;
 	}
 }
