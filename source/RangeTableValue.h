@@ -2,6 +2,7 @@
 
 #include <QMainWindow>
 #include "ui_RangeTableValue.h"
+
 #include <QtSql>
 #include <QTableView>
 
