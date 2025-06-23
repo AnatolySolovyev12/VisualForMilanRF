@@ -690,10 +690,13 @@ void VisualForMilanRF::report()
 	int listDonor = sheetsDonor->property("Count").toInt();
 	sheetDonor = sheetsDonor->querySubObject("Item(int)", listDonor);// Тут определяем лист с которым будем работаь
 
-	QTreeWidgetItem* some = ui.treeWidget->topLevelItem(0);
-
-	recursionXlsWriter(some);
-
+	for (int countOfTop = 0; countOfTop < ui.treeWidget->topLevelItemCount(); countOfTop++)
+	{
+		QTreeWidgetItem* some = ui.treeWidget->topLevelItem(countOfTop);
+		recursionXlsWriter(some);
+		some = nullptr;
+	}
+	
 	countRow = 1;
 
 	workbookDonor->dynamicCall("Close()"); // обязательно используем в работе с Excel иначе документы будет фbоном открыт в системе
