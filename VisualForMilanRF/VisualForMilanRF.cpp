@@ -454,7 +454,7 @@ void VisualForMilanRF::loopXmlReader(QXmlStreamReader& xmlReader)
 			VisualForMilanRF::closeEditor(some);
 		}
 
-		if (xmlReader.isEndElement())
+		if (xmlReader.isEndElement() && !myList.isEmpty())
 			myList.pop_back();
 	}
 }
@@ -464,9 +464,11 @@ void VisualForMilanRF::refresh()
 {
 	if (connectDB())
 	{
-		QTreeWidgetItem* some = ui.treeWidget->topLevelItem(0);
-
-		recursionDbSqlReader(some);
+		for(int countOfTop = 0; countOfTop < ui.treeWidget->topLevelItemCount(); countOfTop++)
+		{
+			QTreeWidgetItem* some = ui.treeWidget->topLevelItem(countOfTop);
+			recursionDbSqlReader(some);
+		}
 
 		mw_db.removeDatabase(mw_db.connectionName());
 	}
