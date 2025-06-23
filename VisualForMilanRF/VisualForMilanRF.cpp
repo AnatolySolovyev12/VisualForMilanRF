@@ -468,6 +468,7 @@ void VisualForMilanRF::refresh()
 		{
 			QTreeWidgetItem* some = ui.treeWidget->topLevelItem(countOfTop);
 			recursionDbSqlReader(some);
+			some = nullptr;
 		}
 
 		mw_db.removeDatabase(mw_db.connectionName());
