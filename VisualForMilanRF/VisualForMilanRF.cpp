@@ -353,7 +353,7 @@ void VisualForMilanRF::importXml()
 
 	file.close();
 
-	QFile txtFile("tree.txt");
+	QFile txtFile(QCoreApplication::applicationDirPath() + "\\tree.txt");
 
 	if (!(txtFile.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
 	{
@@ -616,7 +616,7 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 bool VisualForMilanRF::connectDB()
 {
 	// почему то добавление имени подключения не даёт делать запросы.
-	QFile file("browse.txt");
+	QFile file(QCoreApplication::applicationDirPath() + "\\browse.txt");
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -655,7 +655,7 @@ void VisualForMilanRF::browse()
 	if (addFileDonor == "")
 		return;
 
-	QFile file("browse.txt");
+	QFile file(QCoreApplication::applicationDirPath() + "\\browse.txt");
 
 	if (!(file.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
 	{
@@ -752,7 +752,7 @@ void VisualForMilanRF::startingImportXml()
 {
 	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
 
-	QFile file("tree.txt");
+	QFile file(QCoreApplication::applicationDirPath() + "\\tree.txt");
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
