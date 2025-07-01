@@ -353,7 +353,7 @@ void VisualForMilanRF::importXml()
 
 	file.close();
 
-	QFile txtFile("tree.txt");
+	QFile txtFile(QCoreApplication::applicationDirPath() + "\\tree.txt");
 
 	if (!(txtFile.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
 	{
@@ -454,7 +454,7 @@ void VisualForMilanRF::loopXmlReader(QXmlStreamReader& xmlReader)
 			VisualForMilanRF::closeEditor(some);
 		}
 
-		if (xmlReader.isEndElement())
+		if (xmlReader.isEndElement() && !myList.isEmpty())
 			myList.pop_back();
 	}
 }
@@ -464,9 +464,12 @@ void VisualForMilanRF::refresh()
 {
 	if (connectDB())
 	{
-		QTreeWidgetItem* some = ui.treeWidget->topLevelItem(0);
-
-		recursionDbSqlReader(some);
+		for(int countOfTop = 0; countOfTop < ui.treeWidget->topLevelItemCount(); countOfTop++)
+		{
+			QTreeWidgetItem* some = ui.treeWidget->topLevelItem(countOfTop);
+			recursionDbSqlReader(some);
+			some = nullptr;
+		}
 
 		mw_db.removeDatabase(mw_db.connectionName());
 	}
@@ -613,7 +616,7 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 bool VisualForMilanRF::connectDB()
 {
 	// почему то добавление имени подключения не даёт делать запросы.
-	QFile file("browse.txt");
+	QFile file(QCoreApplication::applicationDirPath() + "\\browse.txt");
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -652,7 +655,7 @@ void VisualForMilanRF::browse()
 	if (addFileDonor == "")
 		return;
 
-	QFile file("browse.txt");
+	QFile file(QCoreApplication::applicationDirPath() + "\\browse.txt");
 
 	if (!(file.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
 	{
@@ -687,10 +690,13 @@ void VisualForMilanRF::report()
 	int listDonor = sheetsDonor->property("Count").toInt();
 	sheetDonor = sheetsDonor->querySubObject("Item(int)", listDonor);// Тут определяем лист с которым будем работаь
 
-	QTreeWidgetItem* some = ui.treeWidget->topLevelItem(0);
-
-	recursionXlsWriter(some);
-
+	for (int countOfTop = 0; countOfTop < ui.treeWidget->topLevelItemCount(); countOfTop++)
+	{
+		QTreeWidgetItem* some = ui.treeWidget->topLevelItem(countOfTop);
+		recursionXlsWriter(some);
+		some = nullptr;
+	}
+	
 	countRow = 1;
 
 	workbookDonor->dynamicCall("Close()"); // обязательно используем в работе с Excel иначе документы будет фbоном открыт в системе
@@ -746,7 +752,7 @@ void VisualForMilanRF::startingImportXml()
 {
 	/* Открываем файл для Чтения с помощью пути, указанного в lineEditWrite */
 
-	QFile file("tree.txt");
+	QFile file(QCoreApplication::applicationDirPath() + "\\tree.txt");
 
 	if (!file.open(QIODevice::ReadOnly))
 	{

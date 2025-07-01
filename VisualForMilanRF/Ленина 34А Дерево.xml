@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+  <Point Adress="Ленина 34А" ID="" Number="" StartingValueCold="" StartingValueHot="">
+    <Point Adress="01 су" ID="124001" Number="400097415" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="1191.43" StartingValueHot="700"/>
+    <Point Adress="01 ээ" ID="124001" Number="74985" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="02 су" ID="124002" Number="400097759" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="381.30" StartingValueHot="343.35"/>
+    <Point Adress="02 ээ" ID="124002" Number="75020" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="03 су" ID="124003" Number="400097755" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="195.69" StartingValueHot="105.52"/>
+    <Point Adress="03 ээ" ID="124003" Number="74987" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="04 су" ID="124004" Number="400097416" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="330.18" StartingValueHot="55.67"/>
+    <Point Adress="04 ээ" ID="124004" Number="74991" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="05 су" ID="124005" Number="400085973" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="357.61" StartingValueHot="331.78"/>
+    <Point Adress="05 ээ" ID="124005" Number="74988" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="06 су" ID="124006" Number="400092799" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="312.64" StartingValueHot="99721.30"/>
+    <Point Adress="06 ээ" ID="124006" Number="74982" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="07 су" ID="124007" Number="400097754" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="368.00" StartingValueHot="212.16"/>
+    <Point Adress="07 ээ" ID="124007" Number="74989" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="08 су" ID="124008" Number="Без интерфейсов. Фото в папке (выявили 24.02.25 О)" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="114.52" StartingValueHot="108.08"/>
+    <Point Adress="08 ээ" ID="124008" Number="74990" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="09 су" ID="124009" Number="400097689" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="497.28" StartingValueHot="308.91"/>
+    <Point Adress="09 ээ" ID="124009" Number="74992" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="10 су1" ID="429931" Number="400097693" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="187.3" StartingValueHot="116.98"/>
+    <Point Adress="10 су2" ID="429931" Number="400097694" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="528.19" StartingValueHot="294.85"/>
+    <Point Adress="10 ээ" ID="429931" Number="75001" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="11 су" ID="124011" Number="400097691" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="503.99" StartingValueHot="179.47"/>
+    <Point Adress="11 ээ" ID="124011" Number="74986" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="12 су1" ID="124012" Number="400097410" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="59.23" StartingValueHot="53.86"/>
+    <Point Adress="12 су2" ID="124012" Number="400092803" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="214.83" StartingValueHot="109.62"/>
+    <Point Adress="12 ээ" ID="124012" Number="74981" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="13 су1" ID="124013" Number="400085958" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="136.78" StartingValueHot="285.2"/>
+    <Point Adress="13 су2" ID="124013" Number="400097684" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="606.45" StartingValueHot="322.64"/>
+    <Point Adress="13 ээ" ID="124013" Number="74995" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="14 су1" ID="124014" Number="400097688" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="367.72" StartingValueHot="79.44"/>
+    <Point Adress="14 су2" ID="124014" Number="400085983" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="28.53" StartingValueHot="60.58"/>
+    <Point Adress="14 ээ" ID="124014" Number="74998" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="15 су1" ID="124015" Number="400097745" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="487.9" StartingValueHot="155.81"/>
+    <Point Adress="15 су2" ID="124015" Number="400085978" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="295.64" StartingValueHot="301.32"/>
+    <Point Adress="15 ээ" ID="124015" Number="75008" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="16 су1" ID="426656" Number="400097690" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="630.05" StartingValueHot="613.51"/>
+    <Point Adress="16 су2" ID="426656" Number="400097681" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="64.23" StartingValueHot="35.50"/>
+    <Point Adress="16 ээ" ID="426656" Number="75024" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="17 су1" ID="124017" Number="400085951" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="152.109" StartingValueHot="42.651"/>
+    <Point Adress="17 су2" ID="124017" Number="400097685" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="59.910" StartingValueHot="94.074"/>
+    <Point Adress="17 су3" ID="124017" Number="400097753" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="199.521" StartingValueHot="236.952"/>
+    <Point Adress="17 ээ" ID="124017" Number="74980" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="18 су1" ID="124018" Number="400097695" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="64.15" StartingValueHot="97.79"/>
+    <Point Adress="18 су2" ID="124018" Number="400097760" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="30.02" StartingValueHot="10.32"/>
+    <Point Adress="18 ээ" ID="124018" Number="75000" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="19 су" ID="124019" Number="400097408" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="580.18" StartingValueHot="66.03"/>
+    <Point Adress="19 ээ" ID="124019" Number="74994" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="20 су" ID="124020" Number="400097409" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="246.16" StartingValueHot="132.24"/>
+    <Point Adress="20 ээ" ID="124020" Number="74997" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="21 су" ID="124021" Number="400085784" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="130.21" StartingValueHot="80.09"/>
+    <Point Adress="21 ээ" ID="124021" Number="75014" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="22 су" ID="124022" Number="400097750" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="476.52" StartingValueHot="297.67"/>
+    <Point Adress="22 ээ" ID="124022" Number="74983" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="23 су" ID="124023" Number="400085989" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="760.02" StartingValueHot="470.77"/>
+    <Point Adress="23 ээ" ID="124023" Number="75002" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="24 су" ID="124024" Number="400085981" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="10.54" StartingValueHot="5.18"/>
+    <Point Adress="24 ээ" ID="124024" Number="74996" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="25 су" ID="124025" Number="400097747" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="1187.33" StartingValueHot="777.68"/>
+    <Point Adress="25 ээ" ID="124025" Number="74984" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="26 су" ID="124026" Number="400097749" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="330.16" StartingValueHot="47.01"/>
+    <Point Adress="26 ээ" ID="124026" Number="74993" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="Гост ЭЭ" ID="320004" Number="75206" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+    <Point Adress="Гостиница су" ID="320004" Number="400085976" checkChannel1="1" checkChannel2="0" checkChannel3="1" checkChannel4="0" StartingValueCold="206.14" StartingValueHot="13.51"/>
+    <Point Adress="Сауна" ID="" Number="400097687" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="568" StartingValueHot="187"/>
+  </Point>
+  <Point Adress="Л34а Ввод1" ID="" Number="87696" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+  <Point Adress="Л34а Ввод2" ID="" Number="87698" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+  <Point Adress="Л34а КН1" ID="" Number="75204" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+  <Point Adress="Л34а КН2" ID="" Number="75205" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+  <Point Adress="Кафе Ввод1" ID="" Number="75346" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+  <Point Adress="Кафе Ввод2" ID="" Number="75342" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+  <Point Adress="НЭСКО ввод1" ID="" Number="87694" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+  <Point Adress="НЭСКО ввод2" ID="" Number="87695" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+  <Point Adress="Бутик" ID="" Number="75209" checkChannel1="0" checkChannel2="0" checkChannel3="0" checkChannel4="0" StartingValueCold="" StartingValueHot=""/>
+</Root>
