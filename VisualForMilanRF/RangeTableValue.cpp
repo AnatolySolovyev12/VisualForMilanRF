@@ -5,11 +5,13 @@ RangeTableValue::RangeTableValue(QWidget* parent, QString numberAny)
 {
 	ui.setupUi(this);
 
+	connect(ui.closeButton, SIGNAL(clicked()), this, SLOT(close()));
+
+	connect(ui.applyButton, SIGNAL(clicked()), this, SLOT(applyFunc()));
+
 	this->number = numberAny;
 
 	QString filterStr = "number = '" + number + "'" + " ORDER BY date desc, channelFirst desc"; // фильтр начинается с "where" SQL синтаксиса без самого слова "where"
-
-	//+ "' and date > '05 - 10 - 2024'"
 
 	if (number.length() > 5)
 		model.setTable("channelTable"); // задаём таблицу с которой работаем
@@ -20,11 +22,14 @@ RangeTableValue::RangeTableValue(QWidget* parent, QString numberAny)
 	model.select(); // заполняем модель значениями из таблицы
 	model.setEditStrategy(QSqlTableModel::OnManualSubmit);// OnManualSubmit // OnFieldChange // OnRowChange // изменяя значения в отображении
 
-	//model.setHeaderData(0, Qt::Horizontal, "Name"); // даём название первому столбцу
-   // model.setHeaderData(1, Qt::Horizontal, "Salary"); // даём название второму столбцу
-
 	ui.tableView->setModel(&model);
 }
 
 RangeTableValue::~RangeTableValue()
 {}
+
+void RangeTableValue::applyFunc()
+{
+	if (!model.submitAll())
+		qDebug() << model.lastError();
+}

@@ -632,7 +632,7 @@ bool VisualForMilanRF::connectDB()
 
 	mw_db.setDatabaseName(line);
 
-	mw_db.setConnectOptions("QSQLITE_OPEN_READONLY");
+	//mw_db.setConnectOptions("QSQLITE_OPEN_READONLY"); // если не требуется вносить измненеия в БД то раскомментить
 
 	if (!mw_db.open())
 	{
@@ -801,7 +801,7 @@ void VisualForMilanRF::showRangeTable()
 	connectDB();
 	myRange = new RangeTableValue(this, taked->text(2));
 	myRange->show();
-	mw_db.removeDatabase(mw_db.connectionName());
+	//mw_db.removeDatabase(mw_db.connectionName()); // если не требуется вносить изменения в БД то раскомменитить
 }
 
 

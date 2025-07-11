@@ -13,6 +13,9 @@ public:
     RangeTableValue(QWidget* parent = nullptr, QString numberAny = "");
 	~RangeTableValue();
 
+private slots:
+    void applyFunc();
+
 private:
 	Ui::RangeTableValueClass ui;
 
