@@ -5,9 +5,13 @@ RangeTableValue::RangeTableValue(QWidget* parent, QString numberAny)
 {
 	ui.setupUi(this);
 
+	ui.applyButton->hide();
+
 	connect(ui.closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
 	connect(ui.applyButton, SIGNAL(clicked()), this, SLOT(applyFunc()));
+
+	connect(&model, &QAbstractItemModel::dataChanged, this, &RangeTableValue::dataChangedCheck);
 
 	this->number = numberAny;
 
@@ -32,4 +36,11 @@ void RangeTableValue::applyFunc()
 {
 	if (!model.submitAll())
 		qDebug() << model.lastError();
+	ui.applyButton->hide();
+}
+
+void RangeTableValue::dataChangedCheck()
+{
+	if (model.isDirty())
+		ui.applyButton->show();
 }
