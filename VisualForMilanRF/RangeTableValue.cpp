@@ -7,7 +7,7 @@ RangeTableValue::RangeTableValue(QWidget* parent, QString numberAny)
 
 	this->number = numberAny;
 
-	QString filterStr = "number = '" + number + "'" + " ORDER BY date desc"; // фильтр начинается с "where" SQL синтаксиса без самого слова "where"
+	QString filterStr = "number = '" + number + "'" + " ORDER BY date desc, channelFirst desc"; // фильтр начинается с "where" SQL синтаксиса без самого слова "where"
 
 	//+ "' and date > '05 - 10 - 2024'"
 
@@ -18,7 +18,7 @@ RangeTableValue::RangeTableValue(QWidget* parent, QString numberAny)
 
 	model.setFilter(filterStr); // лучше применять фильтр до команды select
 	model.select(); // заполняем модель значениями из таблицы
-	model.setEditStrategy(QSqlTableModel::OnManualSubmit);// OnManualSubmit // OnFieldChange // OnRowChange // изменяя значения в отображ1
+	model.setEditStrategy(QSqlTableModel::OnManualSubmit);// OnManualSubmit // OnFieldChange // OnRowChange // изменяя значения в отображении
 
 	//model.setHeaderData(0, Qt::Horizontal, "Name"); // даём название первому столбцу
    // model.setHeaderData(1, Qt::Horizontal, "Salary"); // даём название второму столбцу
