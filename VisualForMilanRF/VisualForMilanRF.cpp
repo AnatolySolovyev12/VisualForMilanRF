@@ -796,6 +796,8 @@ void VisualForMilanRF::startingImportXml()
 
 void VisualForMilanRF::showRangeTable()
 {
+	if (ui.treeWidget->currentItem() == nullptr) return;
+
 	QTreeWidgetItem* taked = ui.treeWidget->currentItem();
 
 	connectDB();
