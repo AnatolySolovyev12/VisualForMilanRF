@@ -28,7 +28,8 @@ VisualForMilanRF::VisualForMilanRF(QWidget* parent)
 }
 
 VisualForMilanRF::~VisualForMilanRF()
-{}
+{
+}
 
 
 void VisualForMilanRF::addItemInList()
@@ -76,7 +77,7 @@ void VisualForMilanRF::setData() // в случае двойного клика 
 
 	if (column == 3 || column == 4 || column == 5 || column == 6 || column == 7) return; // не даём редактировать дальше третьего столбца            
 
-   // qDebug() << "OPEN EDITOR";
+	// qDebug() << "OPEN EDITOR";
 
 	middleColumn = column;
 	middleItem = any;
@@ -464,7 +465,7 @@ void VisualForMilanRF::refresh()
 {
 	if (connectDB())
 	{
-		for(int countOfTop = 0; countOfTop < ui.treeWidget->topLevelItemCount(); countOfTop++)
+		for (int countOfTop = 0; countOfTop < ui.treeWidget->topLevelItemCount(); countOfTop++)
 		{
 			QTreeWidgetItem* some = ui.treeWidget->topLevelItem(countOfTop);
 			recursionDbSqlReader(some);
@@ -510,11 +511,21 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 				{
 					if (count == 4 || count == 5)
 					{
-						middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
+						if (some->text(8).indexOf('@') >= 0)
+						{
+							middleValue = (queryString.toDouble(&ok) / 1000) + some->text(8).sliced(1).toDouble(&ok);
+						}
+						else
+							middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
 					}
 					else
 					{
-						middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
+						if (some->text(9).indexOf('@') >= 0)
+						{
+							middleValue = (queryString.toDouble(&ok) / 1000) + some->text(9).sliced(1).toDouble(&ok);
+						}
+						else
+							middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
 					}
 
 					if (some->checkState(count) == Qt::Checked)
@@ -577,11 +588,21 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 				{
 					if (count == 4 || count == 5)
 					{
-						middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
+						if (some->text(8).indexOf('@') >= 0)
+						{
+							middleValue = (queryString.toDouble(&ok) / 1000) + some->text(8).sliced(1).toDouble(&ok);
+						}
+						else
+							middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
 					}
 					else
 					{
-						middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
+						if (some->text(9).indexOf('@') >= 0)
+						{
+							middleValue = (queryString.toDouble(&ok) / 1000) + some->text(9).sliced(1).toDouble(&ok);
+						}
+						else
+							middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
 					}
 
 					if (some->checkState(count) == Qt::Checked)
@@ -696,7 +717,7 @@ void VisualForMilanRF::report()
 		recursionXlsWriter(some);
 		some = nullptr;
 	}
-	
+
 	countRow = 1;
 
 	workbookDonor->dynamicCall("Close()"); // обязательно используем в работе с Excel иначе документы будет фbоном открыт в системе
@@ -715,7 +736,7 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 
 				cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой ячейкой работать
 
-				if ((some->checkState(column) == Qt::Unchecked) && (column > 3) && (some->text(2).length() >5)) continue;
+				if ((some->checkState(column) == Qt::Unchecked) && (column > 3) && (some->text(2).length() > 5)) continue;
 
 				cell->dynamicCall("SetValue(QString)", some->text(column));
 			}
