@@ -8,4 +8,5 @@
 8) 3 colors of the relevance of the date of readings for each object
 9) Sort function
 
-![VisualForMilanRF](https://github.com/user-attachments/assets/d6bbfc99-2cf3-4211-9a06-6873985d7505)
+![Анимация 3](https://github.com/user-attachments/assets/da94933d-b67a-4240-960d-273e50bcf542)
+
