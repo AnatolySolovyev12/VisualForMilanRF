@@ -720,6 +720,7 @@ void VisualForMilanRF::report()
 
 	countRow = 1;
 
+	workbookDonor->dynamicCall("Save()");
 	workbookDonor->dynamicCall("Close()"); // обязательно используем в работе с Excel иначе документы будет фbоном открыт в системе
 	excelDonor->dynamicCall("Quit()");
 	delete excelDonor;
