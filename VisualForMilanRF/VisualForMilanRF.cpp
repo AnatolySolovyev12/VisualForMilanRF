@@ -196,8 +196,7 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столб
 	{
 		if (val->parent() == nullptr)
 		{
-			// qDebug() << ui.treeWidget->topLevelItem(0)->text(0);
-			sBar->showMessage(ui.treeWidget->topLevelItem(0)->text(0), 10000);
+			sBar->showMessage(val->text(0), 10000);
 			break;
 		}
 
