@@ -190,7 +190,12 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столб
 
 	strNumber = strNumber.setNum(number);
 
-	QList <QTreeWidgetItem*> myList = ui.treeWidget->findItems(strNumber, Qt::MatchRecursive, ui.treeWidget->currentColumn());
+	QList <QTreeWidgetItem*> myList;
+
+	if (ui.treeWidget->currentColumn() == -1 || ui.treeWidget->currentColumn() == 0)
+		myList = ui.treeWidget->findItems(strNumber, Qt::MatchRecursive, 2);
+	else
+		myList = ui.treeWidget->findItems(strNumber, Qt::MatchRecursive, ui.treeWidget->currentColumn());
 
 	for (auto& val : myList)
 	{
