@@ -493,7 +493,7 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 	{
 		if (some->text(2) != nullptr)
 		{
-			if (some->text(2).length() > 5)
+			if (some->text(2).length() > 6)
 				queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from channelTable where number = " + some->text(2) + " order by date desc, channelFirst desc";
 			else
 				queryString = "select date, channelFirst, channelSecond, channelThird, channelFour from counterTable where number = " + some->text(2) + " order by date desc, channelFirst desc";
