@@ -17,7 +17,7 @@ RangeTableValue::RangeTableValue(QWidget* parent, QString numberAny)
 
 	QString filterStr = "number = '" + number + "'" + " ORDER BY date desc, channelFirst desc"; // фильтр начинается с "where" SQL синтаксиса без самого слова "where"
 
-	if (number.length() > 5)
+	if (number.length() > 6)
 		model.setTable("channelTable"); // задаём таблицу с которой работаем
 	else
 		model.setTable("counterTable"); // задаём таблицу с которой работаем
