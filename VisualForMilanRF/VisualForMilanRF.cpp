@@ -741,7 +741,7 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 
 				cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой ячейкой работать
 
-				if ((some->checkState(column) == Qt::Unchecked) && (column > 3) && (some->text(2).length() > 5)) continue;
+				if ((some->checkState(column) == Qt::Unchecked) && (column > 3) && (some->text(2).length() > 6)) continue;
 
 				cell->dynamicCall("SetValue(QString)", some->text(column));
 			}
@@ -763,7 +763,7 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 
 				cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой ячейкой работать
 
-				if ((some->checkState(column) == Qt::Unchecked) && (column > 3) && (some->text(2).length() > 5)) continue;
+				if ((some->checkState(column) == Qt::Unchecked) && (column > 3) && (some->text(2).length() > 6)) continue;
 
 				cell->dynamicCall("SetValue(QString)", some->text(column));
 			}
