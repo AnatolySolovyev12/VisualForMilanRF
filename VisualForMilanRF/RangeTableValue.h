@@ -4,6 +4,9 @@
 #include "ui_RangeTableValue.h"
 #include <QtSql>
 #include <QTableView>
+#include <QFileDialog>
+#include <QAxObject>
+#include < QTreeWidgetItem>
 
 class RangeTableValue : public QMainWindow
 {
@@ -17,6 +20,7 @@ public:
 
 private slots:
     void applyFunc();
+    void getXlsReport();
 
 
 private:
