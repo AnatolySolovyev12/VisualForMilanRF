@@ -29,4 +29,11 @@ private:
     QTableView view;
     QSqlTableModel model;
     QString number;
+    QAxObject* xlsUnit = nullptr;
+
+    QAxObject* excelDonorRanged = nullptr;
+    QAxObject* workbooksDonorRanged = nullptr;
+    QAxObject* workbookDonorRanged = nullptr;
+    QAxObject* sheetsDonorRanged = nullptr;
+    QAxObject* sheetDonorRanged = nullptr;
 };

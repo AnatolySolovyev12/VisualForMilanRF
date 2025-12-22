@@ -31,8 +31,10 @@ RangeTableValue::RangeTableValue(QWidget* parent, QString numberAny)
 	ui.tableView->setModel(&model);
 }
 
+
 RangeTableValue::~RangeTableValue()
 {}
+
 
 void RangeTableValue::applyFunc()
 {
@@ -41,23 +43,20 @@ void RangeTableValue::applyFunc()
 	ui.applyButton->hide();
 }
 
+
 void RangeTableValue::dataChangedCheck()
 {
 	if (model.isDirty())
 		ui.applyButton->show();
 }
 
+
 void RangeTableValue::getXlsReport()
 {
 	int countOfRowFromModel = model.rowCount();
+
 	qDebug() << "All count = " << countOfRowFromModel;
-	qDebug() << model.record(1).value(1).toString() << " " << model.record(1).value(2).toString() << " " << model.record(1).value(3).toString();
 
-	//	Извлекайте значения по имени или индексу столбца из QSqlRecord : record.value("column_name").toString() или record.value(columnIndex).toString().
-
-	
-
-	/*
 	QString savedFile = QFileDialog::getSaveFileName(0, "Save Excel file", "", "*.xls");
 	QFile file(savedFile);
 	file.open(QIODevice::WriteOnly);
@@ -68,53 +67,30 @@ void RangeTableValue::getXlsReport()
 		return;
 	}
 
-	QAxObject *excelDonor = new QAxObject("Excel.Application", 0);
-	QAxObject *workbooksDonor = excelDonor->querySubObject("Workbooks");
-	QAxObject *workbookDonor = workbooksDonor->querySubObject("Open(const QString&)", savedFile); // 
-	QAxObject *sheetsDonor = workbookDonor->querySubObject("Worksheets");
-	int listDonor = sheetsDonor->property("Count").toInt();
-	QAxObject *sheetDonor = sheetsDonor->querySubObject("Item(int)", listDonor);// Тут определяем лист с которым будем работаь
+	excelDonorRanged = new QAxObject("Excel.Application", 0);
+	workbooksDonorRanged = excelDonorRanged->querySubObject("Workbooks");
+	workbookDonorRanged = workbooksDonorRanged->querySubObject("Open(const QString&)", savedFile); // 
+	sheetsDonorRanged = workbookDonorRanged->querySubObject("Worksheets");
+	int listDonor = sheetsDonorRanged->property("Count").toInt();
+    sheetDonorRanged = sheetsDonorRanged->querySubObject("Item(int)", listDonor);// Тут определяем лист с которым будем работаь
 
-	for (int countOfTop = 0; countOfTop < ui.treeWidget->topLevelItemCount(); countOfTop++)
+	for (int rowCount = 0; rowCount < countOfRowFromModel; rowCount++)
 	{
-		QTreeWidgetItem* some = ui.treeWidget->topLevelItem(countOfTop);
-		recursionXlsWriter(some);
-		some = nullptr;
-	}
+		QString temp;
 
-	countRow = 1;
-
-	workbookDonor->dynamicCall("Save()");
-	workbookDonor->dynamicCall("Close()"); // обязательно используем в работе с Excel иначе документы будет фbоном открыт в системе
-	excelDonor->dynamicCall("Quit()");
-	delete excelDonor;
-	*/
-
-}
-/*
-void xlsWriterFuncForSqLiteTable(QAxObject* some)
-{
-	if (some->childCount())
-	{
-		if (some->text(1) != nullptr)
+		for (int columnCount = 0; columnCount <= 5; columnCount++)
 		{
-			for (int column = 1; column <= 8; column++) {
-
-				cell = sheetDonor->querySubObject("Cells(&int,&int)", countRow, column); // так указываем с какой ячейкой работать
-
-				if ((some->checkState(column) == Qt::Unchecked) && (column > 3) && (some->text(2).length() > 6)) continue;
-
-				cell->dynamicCall("SetValue(QString)", some->text(column));
-			}
-			countRow++;
+			xlsUnit = sheetDonorRanged->querySubObject("Cells(&int,&int)", rowCount+1, columnCount+1); // так указываем с какой ячейкой работать
+			xlsUnit->dynamicCall("SetValue(QString)", model.record(rowCount).value(columnCount).toString());
+			temp += model.record(rowCount).value(columnCount).toString() + "  ";
+			xlsUnit = nullptr;
 		}
 
-		int count = some->childCount();
-
-		for (int x = 0; x < count; x++)
-		{
-			recursionXlsWriter(some->child(x));
-		}
+		qDebug() << temp;
 	}
+
+	workbookDonorRanged->dynamicCall("Save()");
+	workbookDonorRanged->dynamicCall("Close()"); // обязательно используем в работе с Excel иначе документы будет фbоном открыт в системе
+	excelDonorRanged->dynamicCall("Quit()");
+	delete excelDonorRanged;
 }
-*/
