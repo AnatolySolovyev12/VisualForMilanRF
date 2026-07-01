@@ -199,6 +199,8 @@ void VisualForMilanRF::adressFinder() // поиск в третьем столб
 
 	for (auto& val : myList)
 	{
+		ui.treeWidget->setCurrentItem(val); // переходим на искомый виджет
+
 		if (val->parent() == nullptr)
 		{
 			sBar->showMessage(val->text(0), 10000);
