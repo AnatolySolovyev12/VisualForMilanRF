@@ -43,6 +43,9 @@
     <ClCompile Include="RangeTableValue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="warningTableClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -58,9 +61,15 @@
     <QtMoc Include="RangeTableValue.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="warningTableClass.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="RangeTableValue.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="warningTableClass.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

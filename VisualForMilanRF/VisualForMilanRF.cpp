@@ -19,6 +19,7 @@ VisualForMilanRF::VisualForMilanRF(QWidget* parent)
 	connect(ui.pushButtonReport, &QPushButton::clicked, this, &VisualForMilanRF::report);
 	connect(ui.pushButtonRange, &QPushButton::clicked, this, &VisualForMilanRF::showRangeTable);
 	connect(ui.pushButtonSort, &QPushButton::clicked, this, &VisualForMilanRF::sortTable);
+	connect(ui.pushButtonWarning, &QPushButton::clicked, this, &VisualForMilanRF::showWarningTable);
 
 	middleColumn = 0;
 	sBar = new QStatusBar();
@@ -831,6 +832,15 @@ void VisualForMilanRF::showRangeTable()
 	connectDB();
 	myRange = new RangeTableValue(this, taked->text(2));
 	myRange->show();
+	//mw_db.removeDatabase(mw_db.connectionName()); // если не требуется вносить изменения в БД то раскомменитить
+}
+
+
+void VisualForMilanRF::showWarningTable()
+{
+	connectDB();
+	myWarning = new warningTableClass(this);
+	myWarning->show();
 	//mw_db.removeDatabase(mw_db.connectionName()); // если не требуется вносить изменения в БД то раскомменитить
 }
 

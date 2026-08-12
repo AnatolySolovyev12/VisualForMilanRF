@@ -3,7 +3,6 @@
 #include <QMainWindow>
 #include "ui_RangeTableValue.h"
 #include <QtSql>
-#include <QTableView>
 #include <QFileDialog>
 #include <QAxObject>
 #include < QTreeWidgetItem>
@@ -26,7 +25,6 @@ private slots:
 private:
 	Ui::RangeTableValueClass ui;
 
-    QTableView view;
     QSqlTableModel model;
     QString number;
     QAxObject* xlsUnit = nullptr;

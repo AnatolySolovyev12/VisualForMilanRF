@@ -12,6 +12,7 @@
 #include <QTableWidgetItem>
 #include "RangeTableValue.h"
 #include <QMouseEvent>
+#include "warningTableClass.h"
 
 class VisualForMilanRF : public QMainWindow
 {
@@ -38,6 +39,8 @@ public:
     void showRangeTable();
     void sortTable();
     void mousePressEvent(QMouseEvent* event);
+    void showWarningTable();
+
 
 private slots:
     void setData();
@@ -65,6 +68,7 @@ private:
     QStatusBar* sBar;
 
     RangeTableValue* myRange = nullptr;
+    warningTableClass* myWarning = nullptr;
 
     bool sortBool = true;
 };

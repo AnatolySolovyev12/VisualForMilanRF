@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="warningTableClass.cpp" />
     <QtRcc Include="VisualForMilanRF.qrc" />
     <QtUic Include="RangeTableValue.ui" />
     <QtUic Include="VisualForMilanRF.ui" />
@@ -99,8 +100,10 @@
     <ClCompile Include="RangeTableValue.cpp" />
     <ClCompile Include="VisualForMilanRF.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="warningTableClass.ui" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="warningTableClass.h" />
     <QtMoc Include="RangeTableValue.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
