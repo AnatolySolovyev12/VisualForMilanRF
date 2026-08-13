@@ -61,7 +61,6 @@ void VisualForMilanRF::deleteItemInList()
 	if (ui.treeWidget->currentItem() == nullptr) return;
 
 	QTreeWidgetItem* taked = ui.treeWidget->currentItem();
-
 	QTreeWidgetItem* parent = taked->parent();
 
 	if (taked->parent() == nullptr)
@@ -156,7 +155,6 @@ void VisualForMilanRF::otherItemWasChecked(QTreeWidgetItem* any) // закрыв
 	if (offChanger) return;
 
 	int column = ui.treeWidget->currentColumn();
-	// qDebug() << "Checked " << any->text(column);
 
 	if (any == middleItem && column == middleColumn)
 		return;
@@ -270,11 +268,8 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 	if (some->childCount())
 	{
 		someXmlWriter.writeStartElement("Point"); // отркывает начальный элемент "лестницы" xml
-
 		someXmlWriter.writeAttribute("Adress", some->text(0)); // присваиваем атрибуты внутри открытого первого элемента  
-
 		someXmlWriter.writeAttribute("ID", some->text(1));
-
 		someXmlWriter.writeAttribute("Number", some->text(2));
 
 		if (some->text(2) != nullptr)
@@ -299,20 +294,15 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 		int count = some->childCount();
 
 		for (int x = 0; x < count; x++)
-		{
 			recursionXmlWriter(some->child(x), someXmlWriter);
-		}
 
 		someXmlWriter.writeEndElement();
 	}
 	else
 	{
 		someXmlWriter.writeStartElement("Point"); // отркывает начальный элемент "лестницы" xml  
-
 		someXmlWriter.writeAttribute("Adress", some->text(0)); // присваиваем атрибуты внутри открытого первого элемента   
-
 		someXmlWriter.writeAttribute("ID", some->text(1)); //
-
 		someXmlWriter.writeAttribute("Number", some->text(2));
 
 		if (some->text(2) != nullptr)
@@ -333,7 +323,6 @@ void VisualForMilanRF::recursionXmlWriter(QTreeWidgetItem* some, QXmlStreamWrite
 
 		someXmlWriter.writeAttribute("StartingValueCold", some->text(8));
 		someXmlWriter.writeAttribute("StartingValueHot", some->text(9));
-
 		someXmlWriter.writeEndElement();
 
 		return;
@@ -348,9 +337,7 @@ void VisualForMilanRF::importXml()
 	QString addFileDonor = QFileDialog::getOpenFileName(0, "Choose XML for import", "", "*.xml");
 
 	if (addFileDonor == "")
-	{
 		return;
-	}
 
 	QFile file(addFileDonor);
 	QXmlStreamReader xmlReader(&file);
@@ -365,7 +352,6 @@ void VisualForMilanRF::importXml()
 
 	if (!(txtFile.open(QIODevice::WriteOnly | QIODevice::Truncate))) // Truncate - для очистки содержимого файла
 	{
-		// qDebug() << "Don't find browse file. Add a directory with a tree.";
 		sBar->showMessage("Don't find browse file. Add a directory with a tree.", 10000);
 		return;
 	}
@@ -397,9 +383,7 @@ void VisualForMilanRF::loopXmlReader(QXmlStreamReader& xmlReader)
 				continue;
 
 			if (myList.length() == 0)
-			{
 				some = new QTreeWidgetItem(ui.treeWidget);
-			}
 			else
 				some = new QTreeWidgetItem(myList.constLast());
 
@@ -511,38 +495,28 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 				queryString = query.value(count - 3).toString(); // ID с показаниями на единицу меньше чем мы выявили по номеру счётчика.
 
 				if (count == 3)
-				{
 					some->setText((count), queryString);
-				}
 				else
 				{
 					if (count == 4 || count == 5)
 					{
 						if (some->text(8).indexOf('@') >= 0)
-						{
 							middleValue = (queryString.toDouble(&ok) / 1000) + some->text(8).sliced(1).toDouble(&ok);
-						}
 						else
 							middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
 					}
 					else
 					{
 						if (some->text(9).indexOf('@') >= 0)
-						{
 							middleValue = (queryString.toDouble(&ok) / 1000) + some->text(9).sliced(1).toDouble(&ok);
-						}
 						else
 							middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
 					}
 
 					if (some->checkState(count) == Qt::Checked)
-					{
 						some->setText((count), queryString.setNum(middleValue));
-					}
 					else
-					{
 						some->setText((count), queryString);
-					}
 				}
 
 				if (count == 3 && queryString == (curDate.toString("yyyy-MM-dd")))
@@ -588,38 +562,28 @@ void VisualForMilanRF::recursionDbSqlReader(QTreeWidgetItem* some)
 				queryString = query.value(count - 3).toString(); // ID с показаниями на единицу меньше чем мы выявили по номеру счётчика.
 
 				if (count == 3)
-				{
 					some->setText((count), queryString);
-				}
 				else
 				{
 					if (count == 4 || count == 5)
 					{
 						if (some->text(8).indexOf('@') >= 0)
-						{
 							middleValue = (queryString.toDouble(&ok) / 1000) + some->text(8).sliced(1).toDouble(&ok);
-						}
 						else
 							middleValue = (queryString.toDouble(&ok) / 100) + some->text(8).toDouble(&ok);
 					}
 					else
 					{
 						if (some->text(9).indexOf('@') >= 0)
-						{
 							middleValue = (queryString.toDouble(&ok) / 1000) + some->text(9).sliced(1).toDouble(&ok);
-						}
 						else
 							middleValue = (queryString.toDouble(&ok) / 100) + some->text(9).toDouble(&ok);
 					}
 
 					if (some->checkState(count) == Qt::Checked)
-					{
 						some->setText((count), queryString.setNum(middleValue));
-					}
 					else
-					{
 						some->setText((count), queryString);
-					}
 				}
 
 				if (count == 3 && queryString == (curDate.toString("yyyy-MM-dd")))
@@ -707,9 +671,7 @@ void VisualForMilanRF::report()
 	file.close();
 
 	if (savedFile == "")
-	{
 		return;
-	}
 
 	excelDonor = new QAxObject("Excel.Application", 0);
 	workbooksDonor = excelDonor->querySubObject("Workbooks");
@@ -754,9 +716,7 @@ void VisualForMilanRF::recursionXlsWriter(QTreeWidgetItem* some)
 		int count = some->childCount();
 
 		for (int x = 0; x < count; x++)
-		{
 			recursionXlsWriter(some->child(x));
-		}
 	}
 	else
 	{
@@ -804,9 +764,7 @@ void VisualForMilanRF::startingImportXml()
 	QFile xmlFile(myLine);
 
 	if (xmlFile.exists())
-	{
 		xmlFile.open(QFile::ReadWrite);
-	}
 	else
 	{
 		sBar->showMessage("Don't find browse file. Add a directory with a tree.", 10000);

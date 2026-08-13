@@ -32,9 +32,7 @@ void warningTableClass::clearTable()
 		if (model.removeRows(0, countOfRows))
 		{
 			if (model.submitAll())
-			{
 				ui.statusBar->showMessage("All rows was delete", 10000);
-			}
 			else
 			{
 				ui.statusBar->showMessage("submitAll() wasnt done: " + model.lastError().text(), 10000);
@@ -42,9 +40,7 @@ void warningTableClass::clearTable()
 			}
 		}
 		else
-		{
 			ui.statusBar->showMessage("removeRows() wasnt done: " + model.lastError().text(), 10000);
-		}
 	}
 }
 

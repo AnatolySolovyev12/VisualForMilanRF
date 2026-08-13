@@ -21,7 +21,6 @@ private slots:
     void applyFunc();
     void getXlsReport();
 
-
 private:
 	Ui::RangeTableValueClass ui;
 

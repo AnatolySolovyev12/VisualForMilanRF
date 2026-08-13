@@ -8,11 +8,8 @@ RangeTableValue::RangeTableValue(QWidget* parent, QString numberAny)
 	ui.applyButton->hide();
 
 	connect(ui.closeButton, SIGNAL(clicked()), this, SLOT(close()));
-
 	connect(ui.applyButton, SIGNAL(clicked()), this, SLOT(applyFunc()));
-
 	connect(ui.xlsButton, SIGNAL(clicked()), this, SLOT(getXlsReport()));
-
 	connect(&model, &QAbstractItemModel::dataChanged, this, &RangeTableValue::dataChangedCheck);
 
 	this->number = numberAny;
@@ -63,9 +60,7 @@ void RangeTableValue::getXlsReport()
 	file.close();
 
 	if (savedFile == "")
-	{
 		return;
-	}
 
 	excelDonorRanged = new QAxObject("Excel.Application", 0);
 	workbooksDonorRanged = excelDonorRanged->querySubObject("Workbooks");
