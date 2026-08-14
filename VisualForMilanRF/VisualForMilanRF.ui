@@ -249,7 +249,7 @@
      </rect>
     </property>
     <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;We unload the XLS report with the current values of the object tree&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>We unload the XLS report with the current values of the object tree</string>
     </property>
     <property name="text">
      <string>Rp</string>
@@ -330,7 +330,7 @@
      </rect>
     </property>
     <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Display the device value in tabular form&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>Display the readings of this device from the database by day</string>
     </property>
     <property name="text">
      <string>Ra</string>
@@ -346,7 +346,7 @@
      </rect>
     </property>
     <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Display the device value in tabular form&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>Sorts the table by the selected column</string>
     </property>
     <property name="text">
      <string>Sr</string>
@@ -388,7 +388,7 @@
      </rect>
     </property>
     <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Display the device value in tabular form&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>Show warning table from data base</string>
     </property>
     <property name="text">
      <string>W</string>
